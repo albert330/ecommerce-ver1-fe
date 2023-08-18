@@ -1,0 +1,45 @@
+{
+    "name": "maxcoach",
+    "version": "1.0.0",
+    "author": "uzzal",
+    "private": true,
+    "scripts": {
+        "dev": "nuxt",
+        "build": "nuxt build",
+        "start": "nuxt start",
+        "generate": "nuxt generate"
+    },
+    "dependencies": {
+        "@nuxtjs/axios": "^5.13.6",
+        "@nuxtjs/dotenv": "^1.4.1",
+        "@nuxtjs/proxy": "^2.1.0",
+        "@nuxtjs/recaptcha": "^1.1.1",
+        "@nuxtjs/style-resources": "^1.2.1",
+        "@nuxtjs/google-tag-manager": "^2.3.2",
+        "aos": "^2.3.4",
+        "bootstrap": "^4.6.0",
+        "bootstrap-vue": "^2.21.2",
+        "cookie-universal-nuxt": "^2.2.2",
+        "core-js": "^3.18.2",
+        "nuxt": "^2.15.8",
+        "parallax-js": "^3.1.0",
+        "recaptcha-v3": "^1.10.0",
+        "rellax": "^1.12.1",
+        "swiper": "^5.4.5",
+        "vue-awesome-swiper": "^4.1.1",
+        "vue-backtotop": "^1.6.1",
+        "vue-inline-svg": "^2.0.0",
+        "vue-select": "^3.13.0",
+        "vue-silentbox": "^2.4.5",
+        "vue-typed-js": "^0.1.2",
+        "vue2-google-maps": "^0.10.7",
+        "vuejs-paginate": "^2.1.0",
+        "vuex": "3.6.2"
+    },
+    "devDependencies": {
+        "@nuxtjs/color-mode": "^2.1.1",
+        "sass": "^1.42.1",
+        "sass-loader": "^10.2.0",
+        "webpack": "^4.46.0"
+    }
+}

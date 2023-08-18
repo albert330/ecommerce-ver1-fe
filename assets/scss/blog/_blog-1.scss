@@ -1,0 +1,68 @@
+/* 09.01. Blog One CSS */
+
+.blog {
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 8px;
+    height: 100%;
+    padding: 1.5rem;
+    transition: $transition;
+
+    & .thumbnail {
+        position: relative;
+
+        overflow: hidden;
+
+        border-radius: 8px;
+
+        & .image {
+            display: block;
+
+            & img {
+                width: 100%;
+
+                transition: all 1.5s cubic-bezier(0, 0, 0.2, 1);
+            }
+        }
+    }
+
+    & .info {
+        position: relative;
+        padding-top: 1.875rem;
+
+        & .category {
+            font-size: 0.938rem;
+            font-weight: 400;
+
+            display: block;
+
+            margin-bottom: 0.75rem;
+
+            letter-spacing: 2px;
+            text-transform: uppercase;
+
+            color: $text-color;
+
+            &:hover {
+                color: $primary;
+            }
+        }
+
+        & .title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
+    }
+
+    &:hover {
+        & .thumbnail {
+            & .image {
+                & img {
+                    transform: scale(1.1);
+                }
+            }
+        }
+    }
+}

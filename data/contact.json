@@ -1,0 +1,19 @@
+{
+    "infoHeading": "For more information about our courses, get in touch with MaxCoach via contacts",
+    "address": {
+        "title": "Address",
+        "location": "Your address goes here"
+    },
+    "contact": {
+        "title": "Contact",
+        "mobileNo": "0123456789",
+        "hotline": "0123456",
+        "email": "demo@example.com"
+    },
+    "workingHour": {
+        "title": "Hour of operation",
+        "dayOne": "Monday – Friday : 09:00 – 20:00",
+        "dayTwo": "Sunday & Saturday: 10:30 – 22:00"
+    },
+    "contactFormHeader": "Fill out this form for booking a consultant advising session."
+}

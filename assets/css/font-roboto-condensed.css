@@ -1,0 +1,21 @@
+/* @charset "UTF-8"; */
+@font-face {
+    font-family: "Roboto Condensed";
+    font-weight: 300;
+    font-style: normal;
+    src: url("../fonts/roboto_condensed/RobotoCondensed-Light.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    font-weight: 400;
+    font-style: normal;
+    src: url("../fonts/roboto_condensed/RobotoCondensed-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    font-weight: 700;
+    font-style: normal;
+    src: url("../fonts/roboto_condensed/RobotoCondensed-Bold.ttf") format("truetype");
+}
