@@ -79,6 +79,11 @@
                        
                     </ul>
                 </li>
+                <li class="children">
+                    <n-link to="/blog">
+                        <h5 class="text-dark font-weight-bold text-capitalize mb-0 roboto-condensed-font">BLOGS</h5>
+                    </n-link>
+                </li>
                 
                 <!-- 
                 <li class="menu-item-has-children">
