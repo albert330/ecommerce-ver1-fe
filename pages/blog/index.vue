@@ -17,7 +17,7 @@
                     <div class="col-lg-8">
                        
                         <div class="d-flex flex-wrap align-items-center justify-content-between mb-3" style="gap: 16px">
-                            <h3 class="text-black">Latest News</h3>
+                            <h3 class="text-black">Latest Blogs</h3>
                             <div class="d-flex align-items-center">
                                 <span class="fw-700">Urutkan:</span>
                                 <select class="form-control" v-model="sortType" @change="onChangeSort" style="min-width: 120px">
