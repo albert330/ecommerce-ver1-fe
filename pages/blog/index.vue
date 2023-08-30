@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="d-flex flex-wrap align-items-center justify-content-between mb-3" style="gap: 16px">
-                            <h3 class="text-black">Latest News</h3>
+                            <h3 class="text-black">Latest Blogs</h3>
                             <div class="d-flex align-items-center">
                                 <span class="fw-700">Urutkan:</span>
                                 <select class="form-control ml-2" v-model="params.sort_type" style="min-width: 120px">
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-sm-6 mb-4" v-for="item in 6" :key="item">
+                            <div class="col-sm-6 mb-4" v-for="(item, index) in blogs" :key="index">
                                 <div class="blog-card box-shadow">
                                     <div class="thumbnail">
                                         <n-link :to="'/blog/detail'" class="image">
@@ -35,9 +35,9 @@
                                         </n-link>
                                     </div>
                                     <div class="info px-3">
-                                        <p class="category">Lifestyle</p>
-                                        <h6 class="title">Begin Now to Be What You Will Be Hereafter</h6>
-                                        <p class="address">Met to launch on the manufacturer’s new A330neo aircraft in 2017</p>
+                                        <p class="category">{{ item.category.name }}</p>
+                                        <h6 class="title">{{ item.title }}</h6>
+                                        <p class="address">{{ item.short_desc }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -56,22 +56,8 @@
                         </div>
                         <h3 class="text-black mb-3">Categories</h3>
                         <div class="row mb-4">
-                            <div class="col-sm-6">
-                                <ul class="nav flex-column">
-                                    <li class="nav-link p-0 pb-3"><nuxt-link :to="'/blog'">All Categories</nuxt-link></li>
-                                    <li class="nav-link p-0 pb-3"><nuxt-link :to="'/blog'">News</nuxt-link></li>
-                                    <li class="nav-link p-0 pb-3"><nuxt-link :to="'/blog'">Partnership</nuxt-link></li>
-                                    <li class="nav-link p-0 pb-3"><nuxt-link :to="'/blog'">Product and Offer</nuxt-link></li>
-                                    <li class="nav-link p-0 pb-3"><nuxt-link :to="'/blog'">Human Resources</nuxt-link></li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-6">
-                                <ul class="nav flex-column">
-                                    <li class="nav-link p-0 pb-3"><nuxt-link :to="'/blog'">Lifestyle</nuxt-link></li>
-                                    <li class="nav-link p-0 pb-3"><nuxt-link :to="'/blog'">Updates</nuxt-link></li>
-                                    <li class="nav-link p-0 pb-3"><nuxt-link :to="'/blog'">Marketing</nuxt-link></li>
-                                    <li class="nav-link p-0 pb-3"><nuxt-link :to="'/blog'">Limited Promotion and instore</nuxt-link></li>
-                                </ul>
+                            <div class="col-sm-6" v-for="(item, index) in blogCategories" :key="index">
+                                <nuxt-link :to="'/blog/category/'+ item.slug" class="p-0 pb-3">{{ item.name }}</nuxt-link>
                             </div>
                         </div>
                         <h3 class="text-black mb-3">Hot News</h3>
@@ -111,6 +97,7 @@ export default {
     data() {
         return {
             blogs: [],
+            blogCategories: [],
             params: {
                 paginate: 1,
                 per_page: 12,
@@ -128,8 +115,34 @@ export default {
         };
     },
     watch: {},
-    mounted() {},
-    methods: {},
+    mounted() {
+        this.getBlogCategory();
+        this.getBlog();
+    },
+    methods: {
+        getBlogCategory() {
+            this.isLoadingCategory = true;
+            this.$axios
+                .get("/api/v1/publics/blog-category/show")
+                .then((res) => {
+                    this.blogCategories = Array.isArray(res.data.data) ? res.data.data : [res.data.data];
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        },
+        getBlog() {
+            this.isLoadingCategory = true;
+            this.$axios
+                .get("/api/v1/publics/blog/show")
+                .then((res) => {
+                    this.blogs = Array.isArray(res.data.data) ? res.data.data : [res.data.data];
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        },
+    }
 };
 </script>
 
