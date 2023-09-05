@@ -33,8 +33,10 @@
                                 <div class="blog-card box-shadow">
                                     <div class="thumbnail">
                                         <n-link :to="'/blog/' + item.slug" class="image">
-                                            <img src="https://dummyimage.com/640x1:1/e4e4e4/e4e4e4" class="image-1 ratio1x1" alt="blog-image" />
-                                            <img src="https://dummyimage.com/640x1:1/e4e4e4/e4e4e4" class="image-2 ratio1x1" alt="blog-image" />
+                                            <img :src="assetUrl + item.cover" :alt="item.title" class="image-1 ratio1x1">
+                                            <img :src="assetUrl + item.cover" :alt="item.title" class="image-2 ratio1x1">
+                                            <!-- <img src="https://dummyimage.com/640x1:1/e4e4e4/e4e4e4" class="image-1 ratio1x1" alt="blog-image" /> -->
+                                            <!-- <img src="https://dummyimage.com/640x1:1/e4e4e4/e4e4e4" class="image-2 ratio1x1" alt="blog-image" /> -->
                                         </n-link>
                                     </div>
                                     <div class="info px-3">

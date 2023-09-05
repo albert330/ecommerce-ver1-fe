@@ -5,10 +5,11 @@
                 <div class="row mb-5 pb-4">
                     <div class="col-lg-8">
                         <div class="rounded-xl img-ratio-16x9 mb-4">
-                            <img src="https://dummyimage.com/640x16:9/e2e2e2/e2e2e2" class="w-100" alt="blog-detail-image" />
+                            <img :src="assetUrl + blog.cover" :alt="blog.title" class="w-100">
+                            <!-- <img src="https://dummyimage.com/640x16:9/e2e2e2/e2e2e2" class="w-100" alt="blog-detail-image" /> -->
                         </div>
                         <div class="d-flex align-content-center justify-content-between mb-4">
-                            <p class="roboto-condensed-font fw-400 text-black mb-0">Lifestyle</p>
+                            <p class="roboto-condensed-font fw-400 text-black mb-0">{{ blog.category.name }}</p>
                             <p class="roboto-condensed-font fw-400 text-black mb-0">{{ formattedDate(blog.created_at) }}</p>
                         </div>
                         <h2 class="roboto-condensed-font fw-700 text-black mb-4">{{ blog.title }}</h2>
@@ -30,7 +31,6 @@
                                     </nuxt-link>
                                 </li>
                             </div>
-                         
                             
                             <div v-for="item in categories" :key="item.id" class="category-item" >
                                 <nuxt-link
@@ -63,29 +63,30 @@
                     </div>
                 </div>
                 
-                    <h3 class="roboto-condensed-font text-black fw-700 mb-4"> You may also like</h3>
-                  
-                        <div class="row" v-if="recommended_blogs && recommended_blogs.length > 0">
-                            <div class="col-md-4 mb-4" v-for="item in recommended_blogs" :key="item.id">
-                                <div class="blog-card box-shadow">
-                                    <div class="thumbnail">
-                                        <n-link :to="'/blog/' + item.slug" class="image">
-                                            <img src="https://dummyimage.com/640x1:1/e4e4e4/e4e4e4" class="image-1 ratio1x1" alt="blog-image" />
-                                            <img src="https://dummyimage.com/640x1:1/e4e4e4/e4e4e4" class="image-2 ratio1x1" alt="blog-image" />
-                                        </n-link>
-                                    </div>
-                                    <div class="info px-3">
-                                        <p class="category">{{ item.category?.name }}</p>
-                                        <h6 class="title">{{ item.title }} </h6>
-                                        <p class="address">{{ item.short_desc }}</p>
-                                    </div>
-                                </div>
+                <h3 class="roboto-condensed-font text-black fw-700 mb-4"> You may also like</h3>
+
+                <div class="row" v-if="recommended_blogs && recommended_blogs.length > 0">
+                    <div class="col-md-4 mb-4" v-for="item in recommended_blogs" :key="item.id">
+                        <div class="blog-card box-shadow">
+                            <div class="thumbnail">
+                                <n-link :to="'/blog/' + item.slug" class="image">
+                                    <img :src="assetUrl + item.cover" :alt="item.title" class="image-1 ratio1x1">
+                                    <img :src="assetUrl + item.cover" :alt="item.title" class="image-2 ratio1x1">
+                                    <!-- <img src="https://dummyimage.com/640x1:1/e4e4e4/e4e4e4" class="image-1 ratio1x1" alt="blog-image" />
+                                    <img src="https://dummyimage.com/640x1:1/e4e4e4/e4e4e4" class="image-2 ratio1x1" alt="blog-image" /> -->
+                                </n-link>
+                            </div>
+                            <div class="info px-3">
+                                <p class="category">{{ item.category?.name }}</p>
+                                <h6 class="title">{{ item.title }} </h6>
+                                <p class="address">{{ item.short_desc }}</p>
                             </div>
                         </div>
-                        <div v-else>
-                            <p>No recommended blogs available.</p>
-                        </div>
                     </div>
+                </div>
+                <div v-else>
+                    <p>No recommended blogs available.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -132,7 +133,7 @@ export default {
             const path = this.$route.path;
             const segments = path.split('/');
             const slugIndex = segments.indexOf('blog') + 1;
-         
+            
             this.$axios
                 .get("/api/v1/publics/blog/show", {
                     params: {
@@ -141,6 +142,7 @@ export default {
                 })
                 .then((res) => {
                     this.blog = res.data.data.main_blog;
+                    console.log(this.blog);
                     this.recommended_blogs = res.data.data.recommended_blogs;
                     
                 })
