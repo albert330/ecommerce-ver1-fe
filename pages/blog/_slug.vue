@@ -9,13 +9,13 @@
                             <!-- <img src="https://dummyimage.com/640x16:9/e2e2e2/e2e2e2" class="w-100" alt="blog-detail-image" /> -->
                         </div>
                         <div class="d-flex align-content-center justify-content-between mb-4">
-                            <p class="roboto-condensed-font fw-400 text-black mb-0" v-if="blog && blog.category && blog.category.name">{{ blog.category.name }}</p>
+                            <p class="roboto-condensed-font fw-400 text-black mb-0" v-if="blog && blog.category && blog.category.name">{{ blog?.category?.name }}</p>
                             <p v-else>Loading...</p>
                             <p class="roboto-condensed-font fw-400 text-black mb-0">{{ formattedDate(blog.created_at) }}</p>
                         </div>
                         <h2 class="roboto-condensed-font fw-700 text-black mb-4">{{ blog.title }}</h2>
                         <p class="roboto-condensed-font fw-400 text-black">
-                            {{ blog.long_desc }}
+                            <div v-html="blog?.long_desc ?? ''"></div>
                         </p>
                     </div>
                     <div class="col-lg-4">
