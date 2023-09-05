@@ -58,7 +58,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="header-search"><i class="far fa-search"></i></span>
                                 </div>
-                                <input type="text" class="form-control" :value="search" @change="onChange" placeholder="Cari Artikel" aria-describedby="header-search" />
+                                <input type="text" class="form-control" :value="keyword" @change="onChange" placeholder="Cari Artikel" aria-describedby="header-search" />
                             </div>
                         </form>
                         <h3 class="text-black mb-3">Categories</h3>
@@ -133,7 +133,7 @@ export default {
                 paginate: 1,
                 per_page: 12,
                 page: 1,
-                search: "",
+                keyword: "",
                 category_id: "",
                 sort_type: "asc",
             },
@@ -146,7 +146,7 @@ export default {
             showMore:false,
             sortType: "",
             categoryId: "",
-            search:""
+            keyword:""
         };
     },
     watch: {
@@ -161,7 +161,7 @@ export default {
         keyword: {
             handler: function (value) {
                 if (value !== "") {
-                    this.params.search = value;
+                    this.params.keyword = value;
                     this.$store.commit("setKeyword", value);
                     this.params.page = 1;
                     this.params.category_id = "";
@@ -180,19 +180,19 @@ export default {
                     this.sortType = value?.sort_type ?? "";
                     this.params.category_id = value?.category_id ?? "";
                     this.params.page = 1;
-                    this.params.search = "";
+                    this.params.keyword = "";
                     this.$store.commit("setKeyword", "");
                 }
 
                 if (Object.keys(value).length < 1) {
-                    this.params.search = "";
+                    this.params.keyword = "";
                     this.$store.commit("setKeyword", "");
                     this.params.page = 1;
                     this.params.category_id = "";
                     this.params.sort_type = "";
                     this.categoryId = "";
                     this.sortType = "";
-                    this.search="";
+                    this.keyword="";
                 }
             },
         },
@@ -204,7 +204,7 @@ export default {
             this.getBlogHot();
         } else {
             this.params.page = this.$route.query.page ?? 1;
-            this.params.search = this.$route.query.search ?? "";
+            this.params.keyword = this.$route.query.keyword ?? "";
             this.params.sort_type = this.$route.query.sort_type ?? "";
             this.sortType = this.params.sort_type ?? "";
             this.categoryId = this.$route.query.category_id ?? "";
@@ -292,7 +292,7 @@ export default {
             });
         },
         onChange(event) {
-            this.search = event.target.value;
+            this.keyword = event.target.value;
         },
         onChangeCategory(event){
             this.category_id = event.target.value;
@@ -307,15 +307,15 @@ export default {
 
             let query = { ...this.$route.query };
 
-            if (this.search) {
-                const searchVal = this.search
+            if (this.keyword) {
+                const keywordVal = this.keyword
                 this.params.page = 1;
-                this.params.search = searchVal;
-                query = { ...query, search: searchVal };
+                this.params.keyword = keywordVal;
+                query = { ...query, keyword: keywordVal };
             } else {
                 this.params.page = 1;
-                this.params.search = "";
-                delete query["search"];
+                this.params.keyword = "";
+                delete query["keyword"];
             }
 
             this.$router.push({
