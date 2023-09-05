@@ -23,11 +23,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="has-children">
-                <n-link to="/blog">
-                    <span>Blog</span>
-                </n-link>
-            </li>
+        
             <li class="has-children">
                 <nuxt-link to="">
                     <span class="menu-text" style="font-family:'Roboto Condensed', sans-serif' !important ">About Us</span>
