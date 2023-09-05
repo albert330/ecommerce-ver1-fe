@@ -92,7 +92,8 @@
                         <h3 class="text-black mb-3">Hot News</h3>
                         <div class="blog-card-inline mb-3" v-for="item in blog_hots" :key="item.id">
                             <nuxt-link class="image"  :to="'/blog/' + item.slug">
-                                <img src="https://dummyimage.com/640x1:1/e2e2e2/e2e2e2" alt="blog-image" />
+                                <img :src="assetUrl + item.cover" :alt="item.title" >
+                                <!-- <img src="https://dummyimage.com/640x1:1/e2e2e2/e2e2e2" alt="blog-image" /> -->
                             </nuxt-link>
                             <div class="content">
                                 <nuxt-link  :to="'/blog/' + item.slug" class="title">{{ item.title }}</nuxt-link>
