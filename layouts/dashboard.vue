@@ -17,6 +17,9 @@
                                     <nuxt-link class="nav-link" to="/user/order-list">Order List</nuxt-link>
                                 </li>
                                 <li class="nav-item">
+                                    <nuxt-link class="nav-link" to="/user/my-machine">My Machine</nuxt-link>
+                                </li>
+                                <li class="nav-item">
                                     <nuxt-link class="nav-link" to="/user/profile">My Profile</nuxt-link>
                                 </li>
                             </ul>
