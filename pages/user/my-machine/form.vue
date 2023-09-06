@@ -8,7 +8,7 @@
                     <label for="product_id">Product</label>
                     <select class="form-control" v-model="payload.product_id">
                         <option value="">Select Product</option>
-                        <option :value="item.value" v-for="(item, index) in optionsProduct" :key="index">
+                        <option :value="item.product?.id" v-for="(item, index) in optionsProduct" :key="index">
                             {{ item.product?.name }}
                         </option>
                     </select>
