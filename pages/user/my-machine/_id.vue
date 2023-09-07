@@ -25,10 +25,10 @@
                     </p>
                 </div>
                 <div class="d-flex align-items-start mb-1">
-                    <p class="mb-0" style="width: 115px">Category Machine</p>
+                    <p class="mb-0" style="width: 115px">Serial Number</p>
                     <span class="mr-2">:</span>
                     <p class="mb-0" style="width: calc(100% - 135px)">
-                        {{ machineDetail.category_machine }}
+                        {{ machineDetail.serial_number }}
                     </p>
                 </div>
                 <div class="d-flex align-items-start mb-1">

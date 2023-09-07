@@ -9,13 +9,13 @@
                     <select class="form-control" v-model="payload.product_id">
                         <option value="">Select Product</option>
                         <option :value="item.product?.id" v-for="(item, index) in optionsProduct" :key="index">
-                            {{ item.product?.name }}
+                            <img :src="assetUrl + item.image?.path" :alt="item.product?.name" width="25" height="25">{{ item.product?.name }}
                         </option>
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="category_machine">Category Machine</label>
-                    <input class="form-control" type="text" id="category_machine" name="category_machine" placeholder="Category Machine" v-model="payload.category_machine" />
+                    <label for="serial_number">Serial Number</label>
+                    <input class="form-control" type="text" id="serial_number" name="serial_number" placeholder="Serial Number" v-model="payload.serial_number" />
                 </div>
                 <div class="mb-3">
                     <label for="purchase_date">Purchase Date</label>
@@ -51,7 +51,7 @@ export default {
             payload: {
                 user_id: '',
                 product_id: '',
-                category_machine: '',
+                serial_number: '',
                 purchase_date: '',
                 id: null,
             },

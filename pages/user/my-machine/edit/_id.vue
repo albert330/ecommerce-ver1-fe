@@ -14,8 +14,8 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="category_machine">Category Machine</label>
-                    <input class="form-control" type="text" id="category_machine" name="category_machine" placeholder="Category Machine" v-model="payload.category_machine" />
+                    <label for="serial_number">Serial Number</label>
+                    <input class="form-control" type="text" id="serial_number" name="serial_number" placeholder="Serial Number" v-model="payload.serial_number" />
                 </div>
                 <div class="mb-3">
                     <label for="purchase_date">Purchase Date</label>
@@ -50,7 +50,7 @@ export default {
             isCreateMachine: true,
             payload: {
                 product_id: '',
-                category_machine: '',
+                serial_number: '',
                 purchase_date: '',
                 id: '',
             },
