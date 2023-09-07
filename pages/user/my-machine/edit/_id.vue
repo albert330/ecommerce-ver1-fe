@@ -21,10 +21,10 @@
                     <label for="purchase_date">Purchase Date</label>
                     <input class="form-control" type="datetime-local" id="purchase_date" name="purchase_date" placeholder="Purchase Date" v-model="payload.purchase_date"/>
                 </div>
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label for="description">Description</label>
                     <textarea class="form-control" name="description" id="description" cols="30" rows="10" v-model="payload.description" placeholder="Description here ..."></textarea>
-                </div>
+                </div> -->
                 <div class="d-flex justify-content-end">
                     <div v-if="isDisabled">
                         <b-spinner small></b-spinner>

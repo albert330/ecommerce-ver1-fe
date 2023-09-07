@@ -24,7 +24,7 @@
                 </template>
                 <template v-slot:cell(action)="data">
                     <nuxt-link class="btn btn-md btn-info px-3 py-2" :to="'/user/my-machine/edit/' + data.item.id">Edit</nuxt-link>
-                    <nuxt-link class="btn btn-md btn-primary px-3 py-2" :to="'/user/my-machine/' + data.item.id">Detail</nuxt-link>
+                    <!-- <nuxt-link class="btn btn-md btn-primary px-3 py-2" :to="'/user/my-machine/' + data.item.id">Detail</nuxt-link> -->
                     <button class="btn btn-md btn-danger px-3 py-2" @click="destroy(data.item.id)">
                         Delete
                     </button>
