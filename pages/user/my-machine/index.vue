@@ -64,8 +64,8 @@ export default {
                     sortable: true,
                 },
                 {
-                    key: "category_machine",
-                    label: "Category",
+                    key: "serial_number",
+                    label: "Serial Number",
                     sortable: true,
                 },
                 {
@@ -73,11 +73,11 @@ export default {
                     label: "Purchase Date",
                     sortable: true,
                 },
-                {
-                    key: "description",
-                    label: "Description",
-                    sortable: true,
-                },
+                // {
+                //     key: "description",
+                //     label: "Description",
+                //     sortable: true,
+                // },
                 {
                     key: "action",
                     label: "Action",

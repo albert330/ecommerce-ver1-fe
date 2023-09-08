@@ -7,9 +7,10 @@
                 <div class="mb-3">
                     <label for="product_id">Product</label>
                     <select class="form-control" v-model="payload.product_id">
-                        <option value="">Select Product</option>
+                        <option disabled hidden value="">Select Product</option>
                         <option :value="item.product?.id" v-for="(item, index) in optionsProduct" :key="index">
-                            <img :src="assetUrl + item.image?.path" :alt="item.product?.name" width="25" height="25">{{ item.product?.name }}
+                            {{ item.product?.name }} 
+                            <img :src="assetUrl + item.image[0]?.path" :alt="item.product?.name" width="100" height="100">
                         </option>
                     </select>
                 </div>
@@ -40,9 +41,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 
 export default {
     layout: "dashboard",
+    computed: {
+        ...mapState(["assetUrl"]),
+    },
     data() {
         return {
             optionsProduct: [],
@@ -66,7 +71,9 @@ export default {
         getProduct() {
             this.$axios
                 .get("/api/v1/publics/product/show", {
-                    params: {},
+                    params: {
+                        by_category_id: 259,
+                    },
                 })
                 .then((res) => {
                     this.optionsProduct = res.data.data;
