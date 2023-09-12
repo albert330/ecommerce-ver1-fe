@@ -28,8 +28,10 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <p v-if="isLoadingBlog" class="mb-4 align-items-center">Loading, Please wait...</p>
-                            <div v-if="!isLoadingBlog" class="col-sm-6 mb-4" v-for="item in blogs" :key="item.id">
+                            <div class="mb-5">
+                                <p v-if="isLoadingBlog" class="mb-4 mt-4 align-items-center ml-3">Loading, Please wait...</p>
+                            </div>
+                            <div class="col-sm-6 mb-4" v-if="!isLoadingBlog && blogs.length > 0" v-for="item in blogs" :key="item.id">
                                 <div class="blog-card box-shadow">
                                     <div class="thumbnail">
                                         <n-link :to="'/blog/' + item.slug" class="image">
@@ -46,8 +48,11 @@
                                     </div>
                                 </div>
                             </div>
+                            <div v-if="!isLoadingBlog && blogs.length === 0">
+                                <p class="ml-5">Oops, no articles in this category.</p>
+                            </div>
                         </div>
-                        <div class="d-flex align-items-center justify-content-center mb-5">
+                        <div class="d-flex align-items-center justify-content-center mb-5" v-if="!isLoadingBlog && blogs.length > 0">
                             <b-pagination v-model="params.page" :total-rows="page.total" :per-page="params.per_page" prev-text="Prev" next-text="Next" first-number last-number></b-pagination>
                         </div>
                     </div>
@@ -257,7 +262,7 @@ export default {
                     },
                 })
                 .then((res) => {
-                    this.blog_hots = res.data.data;
+                    this.blog_hots = Array.isArray(res.data.data) ? res.data.data : [res.data.data];
                 })
                 .catch((err) => {
                     console.log(err);
