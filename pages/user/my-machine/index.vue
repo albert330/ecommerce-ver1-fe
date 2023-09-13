@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between">
             <h3 class="roboto-condensed-font text-uppercase mb-4">My Machine</h3>
             <n-link class="btn btn-success waves-effect waves-light mb-4" to="/user/my-machine/form">
-                <i class="mdi mdi-plus me-1"></i> Tambah Baru
+                <i class="mdi mdi-plus me-1"></i> Add Machine
             </n-link>
         </div>
         <div class="d-flex">

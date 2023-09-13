@@ -2,6 +2,14 @@
     <div>
         <div class="section-fluid">
             <div class="container">
+                <ul class="breadcrumb mb-4">
+                    <li>
+                        <n-link to="/blog">Blog</n-link>
+                    </li>
+                    <li class="current">
+                        {{ blog.title ?? "" }}
+                    </li>
+                </ul>
                 <div class="row mb-5 pb-4">
                     <div class="col-lg-8">
                         <div class="rounded-xl img-ratio-16x9 mb-4">
