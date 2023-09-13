@@ -115,7 +115,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-6 col-lg-4 col-xl-3 mb-4" v-for="(item, index) in products" :key="index">
-                                <Product :slug="item.product.slug + '?product_id=' + item.product.id" :image="item.image" :name="item.product.name" :purchasePrice="item.variant_price[0]?.price.purchase_price ?? 0" :discountPrice="item.variant_price[0]?.price.normal_price ?? 0" :percentage="item.variant_price[0]?.price.discount_persentage ?? 0" />
+                                <Product :slug="item.product.slug + '?product_id=' + item.product.id" :image="item.image" :name="item.product.name" :purchasePrice="item.variant_price[0]?.price.purchase_price ?? 0" :discountPrice="item.variant_price[0]?.price.normal_price ?? 0" :percentage="item.variant_price[0]?.price.discount_persentage ?? 0" :isSoldOut="isItemSoldOut(item)" />
                             </div>
                         </div>
                         <div class="row mb-3" v-if="isLoading">
@@ -278,6 +278,18 @@ export default {
         }
     },
     methods: {
+        isItemSoldOut(item) {
+            if(item.variant_list === null){
+                return false;
+            }
+            else if(item?.variant_list?.list?.[0]?.child?.[0]?.stock === 0)
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
+        },
         getCategory() {
             this.isLoadingCategory = true;
             this.$axios

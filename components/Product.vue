@@ -15,6 +15,7 @@
                     <img src="https://dummyimage.com/640x1:1/e4e4e4/e4e4e4" class="image-2 ratio1x1" :alt="name" />
                 </template>
             </n-link>
+            <div class="ribbon-label ribbon-sold-out" v-if="isSoldOut">Sold Out</div>
         </div>
         <div class="info px-3">
             <p class="title" style="min-height:34px;">
@@ -37,6 +38,23 @@
     </div>
 </template>
 
+<style scoped>
+.ribbon-label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.ribbon-sold-out {
+  background-color: red; /* Warna latar belakang untuk sold out */
+}
+</style>
+
 <script>
 import { mapState } from "vuex";
 
@@ -44,7 +62,7 @@ export default {
     computed: {
         ...mapState(["assetUrl"]),
     },
-    props: ["slug", "image", "name", "purchasePrice", "discountPrice", "percentage"],
+    props: ["slug", "image", "name", "purchasePrice", "discountPrice", "percentage", "isSoldOut"],
     methods: {
         convertToRupiah(money) {
             return new Intl.NumberFormat("id-ID", {
