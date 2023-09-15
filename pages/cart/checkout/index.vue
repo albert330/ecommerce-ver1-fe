@@ -143,9 +143,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="col-12">
-                                
-                            </div> -->
+                            <div class="col-6">
+                                <div class="bg-primary rounded-top p-3">
+                                    <h6 class="lead fw-700 text-white mb-0">Voucher</h6>
+                                </div>
+                                <div class="bg-white rounded-bottom p-3">
+                                    <div class="mb-3">
+                                        <label for="code" class="fw-500">Code</label>
+                                        <input class="form-control" type="text" id="code" name="code" placeholder="Ex. XXXXXXXX"/>
+                                    </div>
+                                    <button class="btn btn-md btn-primary btn-block text-uppercase" :disabled="isLoadingVoucher">{{ isLoadingVoucher ? "processing..." : "Use Voucher" }}</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -166,18 +175,6 @@
                             </div>
                             <button class="btn btn-md btn-primary btn-block text-uppercase" @click="handleConfirm" :disabled="isLoadingCheckout">{{ isLoadingCheckout ? "processing..." : "place order" }}</button>
                             <nuxt-link to="/cart" class="btn btn-md btn-outline-primary btn-block text-uppercase" v-if="!isLoadingCheckout">modify cart</nuxt-link>
-                        </div>
-                        <div class="mb-3">
-                            <div class="bg-primary rounded-top p-3">
-                                <h6 class="lead fw-700 text-white mb-0">Voucher</h6>
-                            </div>
-                            <div class="bg-white rounded-bottom p-3">
-                                <div class="mb-3">
-                                    <label for="code" class="fw-500">Code</label>
-                                    <input class="form-control" type="text" id="code" name="code" placeholder="Ex. XXXXXXXX"/>
-                                </div>
-                                <button class="btn btn-md btn-primary btn-block text-uppercase" :disabled="isLoadingVoucher">{{ isLoadingVoucher ? "processing..." : "Use Voucher" }}</button>
-                            </div>
                         </div>
                         <div>
                             <div class="bg-primary rounded-top p-3">
