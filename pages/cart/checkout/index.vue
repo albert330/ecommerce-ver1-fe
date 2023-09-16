@@ -143,21 +143,38 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="bg-primary rounded-top p-3">
-                                    <h6 class="lead fw-700 text-white mb-0">Voucher</h6>
-                                </div>
-                                <div class="bg-white rounded-bottom p-3">
-                                    <div class="mb-3">
-                                        <label for="code" class="fw-500">Code</label>
-                                        <input class="form-control" type="text" id="code" name="code" placeholder="Ex. XXXXXXXX"/>
-                                    </div>
-                                    <button class="btn btn-md btn-primary btn-block text-uppercase" :disabled="isLoadingVoucher">{{ isLoadingVoucher ? "processing..." : "Use Voucher" }}</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
+                        <div class="mb-3">
+                            <div class="bg-primary rounded-top p-3">
+                                <h6 class="lead fw-700 text-white mb-0">Voucher</h6>
+                            </div>
+                            <form @submit.prevent="getVoucher" autocomplete="off" class="mb-5">
+                                <div class="bg-white rounded-bottom p-3" v-if="!isVoucherServices">
+                                    <div class="mb-3">
+                                        <label for="code" class="fw-500">Code</label>
+                                        <input class="form-control" type="text" id="code" name="code" v-model="code" placeholder="Ex. XXXXXXXX"/>
+                                    </div>
+                                    <button class="btn btn-md btn-outline-primary btn-block text-uppercase" :disabled="isLoadingVoucher || code == null ||  code == '' ">{{ isLoadingVoucher ? "processing..." : "Use Voucher" }}</button>
+                                </div>
+                                <div class="bg-white rounded-bottom p-3" v-else>
+                                    <div class="mb-3">
+                                        <label class="fw-500">Voucher Code</label>
+                                        <p>{{ voucherServices.code }}</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="fw-500">Discount</label>
+                                        <div v-if="voucherServices.type == 1">
+                                            <p>{{ convertToRupiah(voucherServices.amount) }}</p>
+                                        </div>
+                                        <div v-if="voucherServices.type == 2">
+                                            <p>{{ voucherServices.amount }} %</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         <div class="bg-white mb-4 p-4" style="box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1)">
                             <h5 class="fw-700 text-uppercase mb-4">Order Summary</h5>
                             <div class="d-flex align-items-center justify-content-between mb-1">
@@ -168,10 +185,24 @@
                                 <span>Shipping Cost :</span>
                                 <p class="mb-0">{{ convertToRupiah(shippingServices[shippingServiceId]?.cost[0]?.value ?? 0) }}</p>
                             </div>
+                            <div class="d-flex align-items-center justify-content-between" v-if="isVoucherServices">
+                                <span>Discount :</span>
+                                <div v-if="voucherServices.type == 1">
+                                    <p class="mb-0">- {{ convertToRupiah(voucherServices.amount ?? 0) }}</p>
+                                </div>
+                                <div v-if="voucherServices.type == 2">
+                                    <p class="mb-0">- {{ convertToRupiah((cart?.calculation.sub_total + (shippingServices[shippingServiceId]?.cost[0]?.value ?? 0)) * (voucherServices.amount ?? 0 ) / 100 ) }}</p>
+                                </div>
+                            </div>
                             <hr class="my-2" />
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <span>Total :</span>
-                                <h6 class="lead fw-700 mb-0">{{ convertToRupiah(cart?.calculation.sub_total + (shippingServices[shippingServiceId]?.cost[0]?.value ?? 0)) }}</h6>
+                                <h6 class="lead fw-700 mb-0" v-if="voucherServices.type == 1">
+                                    {{ convertToRupiah(cart?.calculation.sub_total + (shippingServices[shippingServiceId]?.cost[0]?.value ?? 0) - (voucherServices.amount ?? 0)) }}
+                                </h6>
+                                <h6 class="lead fw-700 mb-0" v-if="voucherServices.type == 2">
+                                    {{ convertToRupiah(cart?.calculation.sub_total + (shippingServices[shippingServiceId]?.cost[0]?.value ?? 0) - (cart?.calculation.sub_total + (shippingServices[shippingServiceId]?.cost[0]?.value ?? 0)) * (voucherServices.amount ?? 0 ) / 100 ) }}
+                                </h6>
                             </div>
                             <button class="btn btn-md btn-primary btn-block text-uppercase" @click="handleConfirm" :disabled="isLoadingCheckout">{{ isLoadingCheckout ? "processing..." : "place order" }}</button>
                             <nuxt-link to="/cart" class="btn btn-md btn-outline-primary btn-block text-uppercase" v-if="!isLoadingCheckout">modify cart</nuxt-link>
@@ -252,6 +283,12 @@ export default {
         return {
             quantity: 1,
             shippingServices: [],
+            voucherServices: {
+                code:'',
+                type:'',
+                amount:'',
+            },
+            code : null,
             shippingCourier: "",
             shippingServiceId: 0,
             selectedCourier: {
@@ -264,6 +301,7 @@ export default {
             isLoadingCheckout: false,
             isLoadingShipping: true,
             isLoadingVoucher: false,
+            isVoucherServices: false,
         };
     },
     watch: {
@@ -517,6 +555,41 @@ export default {
                 currency: "IDR",
                 minimumFractionDigits: 0,
             }).format(money);
+        },
+        
+        getVoucher() {
+            this.isLoadingVoucher = true;
+            this.$axios
+                .get("/api/v1/publics/voucher/use", {
+                    params: {
+                        keyword: this.code,
+                    },
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    this.$bvToast.toast(res.data.message, {
+                            title: `Success`,
+                            variant: "success",
+                            solid: true,
+                        });
+                    this.voucherServices = {
+                        code: res.data.data.code,
+                        type: res.data.data.type,
+                        amount: res.data.data.amount,
+                    };
+                    this.isLoadingVoucher = false;
+                    this.code = null;
+                    this.isVoucherServices = true;
+                })
+                .catch((err) => {
+                    this.isLoadingVoucher = false;
+                    this.$bvToast.toast(err.response.data.message, {
+                        title: `Failed Use Voucher`,
+                        variant: "danger",
+                        solid: true,
+                        appendToast: true,
+                    });
+                });
         },
     },
     middleware: "auth",
