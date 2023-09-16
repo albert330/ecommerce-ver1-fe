@@ -170,6 +170,13 @@
                                                     {{ convertToRupiah(orderProduct.data_calculation.shipping_total) }}
                                                 </td>
                                             </tr>
+                                            <tr class="pt-0" v-if="orderProduct.data_calculation.discount != 0">
+                                                <td colspan="4" class="border-0 pt-0"></td>
+                                                <th class="border-0 pt-0">Discount</th>
+                                                <td class="text-right border-0 pt-0">
+                                                    -{{ convertToRupiah(orderProduct.data_calculation.discount) }}
+                                                </td>
+                                            </tr>
                                             <tr>
                                                 <td colspan="4" class="border-0 pt-0"></td>
                                                 <th class="border-0 pt-0">Grand Total</th>
