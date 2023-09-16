@@ -181,11 +181,11 @@
                                 <span>Sub Total :</span>
                                 <p class="mb-0">{{ convertToRupiah(cart?.calculation.sub_total) }}</p>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between" v-if="shippingServices[shippingServiceId]?.cost[0]?.value > 0">
+                            <div class="d-flex align-items-center justify-content-between mb-1" v-if="shippingServices[shippingServiceId]?.cost[0]?.value > 0">
                                 <span>Shipping Cost :</span>
                                 <p class="mb-0">{{ convertToRupiah(shippingServices[shippingServiceId]?.cost[0]?.value ?? 0) }}</p>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between" v-if="isVoucherServices">
+                            <div class="d-flex align-items-center justify-content-between mb-1" v-if="isVoucherServices">
                                 <span>Discount :</span>
                                 <div v-if="voucherServices.type == 1">
                                     <p class="mb-0">- {{ convertToRupiah(voucherServices.amount ?? 0) }}</p>
@@ -287,6 +287,7 @@ export default {
                 code:'',
                 type:'',
                 amount:'',
+                id:'',
             },
             code : null,
             shippingCourier: "",
@@ -393,6 +394,7 @@ export default {
                     },
                     courier: this.selectedCourier,
                     product: availableProduct,
+                    voucher: this.voucherServices.id,
                 },
             };
 
@@ -576,6 +578,7 @@ export default {
                         code: res.data.data.code,
                         type: res.data.data.type,
                         amount: res.data.data.amount,
+                        id: res.data.data.id,
                     };
                     this.isLoadingVoucher = false;
                     this.code = null;
