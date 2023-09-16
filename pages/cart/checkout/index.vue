@@ -568,7 +568,6 @@ export default {
                     },
                 })
                 .then((res) => {
-                    console.log(res.data);
                     this.$bvToast.toast(res.data.message, {
                             title: `Success`,
                             variant: "success",
