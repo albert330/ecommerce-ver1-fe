@@ -18,7 +18,7 @@
             <b-table :items="machineList" :fields="fields" responsive="md" :per-page="0" :current-page="params.page" show-empty :busy="isLoading">
                 <template #cell(product_id)="data">
                     <div class="d-flex align-items-center">
-                        <img :src="assetUrl + data.item?.image_product[0]?.path" width="75" height="75">
+                        <img :src="assetUrl + data.item?.image[0]?.path" width="75" height="75">
                         <p class="ml-2">
                             {{ data.item?.product?.name }}
                         </p>

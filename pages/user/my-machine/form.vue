@@ -11,26 +11,19 @@
             <form @submit.prevent="gateAction" autocomplete="off" class="mb-5">
                 <div class="mb-3">
                     <label for="product_id">Product</label>
-                    <!-- <select class="form-control" v-model="payload.product_id">
-                        <option disabled hidden value="">Select Product</option>
-                        <option :value="item.product?.id" v-for="(item, index) in optionsProduct" :key="index">
-                            {{ item.product?.name }} 
-                            <img :src="assetUrl + item.image[0]?.path" :alt="item.product?.name" width="100" height="100">
-                        </option>
-                    </select> -->
-                    
-                <div class="dropdown">
-                    <div class="dropdown-toggle border rounded p-1" v-on:click="toggleDropdown">
-                        <img :src="assetUrl + selectedOption?.image[0]?.path" class="dropdown-option-image" width="100" height="100">
-                        <span class="dropdown-option-label">{{ selectedOption?.product?.name }}</span>
-                        <span class="dropdown-caret right"></span>
-                    </div>
-                    <ul class="bg-white border" v-show="isDropdownOpen" style="max-height: 200px; overflow-y: auto; position: relative; margin: 0; padding: 0;">
-                        <li v-for="(item, index) in optionsProduct" :key="index" v-on:click="selectOption(item)" class="p-1 border" style="list-style-type: none; li">
-                            <img :src="assetUrl + item.image[0]?.path" class="dropdown-option-image" width="100" height="100">
-                            <span class="dropdown-option-label">{{ item.product?.name }}</span>
-                        </li>
-                    </ul>
+                    <div class="dropdown">
+                        <div class="dropdown-toggle border rounded p-1" v-on:click="toggleDropdown">
+                            <img src="https://ipsf.net/wp-content/uploads/2021/12/dummy-image-square.webp" class="dropdown-option-image" v-if="selectedOption == null" width="100" height="100">
+                            <img :src="assetUrl + selectedOption?.image[0]?.path" class="dropdown-option-image" width="100" v-else height="100">
+                            <span class="dropdown-option-label">{{ selectedOption?.product?.name }}</span>
+                            <span class="dropdown-caret right"></span>
+                        </div>
+                        <ul class="bg-white border" v-show="isDropdownOpen" style="max-height: 225px; overflow-y: auto; position: relative; margin: 0; padding: 0;">
+                            <li v-for="(item, index) in optionsProduct" :key="index" v-on:click="selectOption(item)" class="p-1 border" style="list-style-type: none;">
+                                <img :src="assetUrl + item.image[0]?.path" class="dropdown-option-image" width="100" height="100">
+                                <span class="dropdown-option-label">{{ item.product?.name }}</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -84,10 +77,6 @@ export default {
             selectedOption: null,
         };
     },
-    created() {
-        this.selectedOption = this.optionsProduct[0];
-        console.log(this.optionsProduct[0]);
-    },
     mounted() {
         this.email = this.$cookies.get("email");
         this.getProduct();
@@ -99,6 +88,7 @@ export default {
         selectOption(option) {
             this.selectedOption = option;
             this.isDropdownOpen = false;
+            this.payload.product_id = option.product?.id;
         },
         getProduct() {
             this.$axios
