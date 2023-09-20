@@ -303,6 +303,7 @@ export default {
             isLoadingShipping: true,
             isLoadingVoucher: false,
             isVoucherServices: false,
+            totalPayment:0,
         };
     },
     watch: {
@@ -332,6 +333,9 @@ export default {
                     this.$store.commit("setCart", { list: [...res.data.data.cart], out_of_stock: [...res.data.data.out_of_stock], calculation: { ...res.data.data.calculation } });
                     if (res.data.data.cart.length < 1) {
                         this.$bvModal.show("modalCartEmpty");
+                    }
+                    else{
+                        this.totalPayment = res.data.data.calculation.sub_total;
                     }
                 })
                 .catch((err) => {
@@ -562,9 +566,10 @@ export default {
         getVoucher() {
             this.isLoadingVoucher = true;
             this.$axios
-                .get("/api/v1/publics/voucher/use", {
+                .get("/api/v1/private/voucher/use", {
                     params: {
                         keyword: this.code,
+                        total: this.totalPayment,
                     },
                 })
                 .then((res) => {
