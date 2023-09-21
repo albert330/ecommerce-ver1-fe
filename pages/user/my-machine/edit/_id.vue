@@ -15,7 +15,8 @@
                         <div class="dropdown-toggle border rounded p-1" v-on:click="toggleDropdown">
                             <img src="https://ipsf.net/wp-content/uploads/2021/12/dummy-image-square.webp" class="dropdown-option-image" v-if="selectedOption == null" width="100" height="100">
                             <img :src="assetUrl + selectedOption?.image[0]?.path" class="dropdown-option-image" width="100" v-else height="100">
-                            <span class="dropdown-option-label">{{ selectedOption?.product?.name }}</span>
+                            <span class="dropdown-option-label" v-if="selectedOption == null">Choose your machine</span>
+                            <span class="dropdown-option-label" v-else>{{ selectedOption?.product?.name }}</span>
                             <span class="dropdown-caret right"></span>
                         </div>
                         <ul class="bg-white border" v-show="isDropdownOpen" style="max-height: 225px; overflow-y: auto; position: relative; margin: 0; padding: 0;">
@@ -98,7 +99,7 @@ export default {
         toggleDropdown() {
             this.isDropdownOpen = !this.isDropdownOpen;
         },
-        selectOption(option) {
+        selectOption(option) {                                                                                                                                                                                                                                                                                                                                                                                                                  
             this.selectedOption = option;
             this.isDropdownOpen = false;
             this.payload.product_id = option.product.id;
