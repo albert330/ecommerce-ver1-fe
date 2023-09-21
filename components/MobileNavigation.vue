@@ -79,11 +79,11 @@
                        
                     </ul>
                 </li>
-                <!-- <li class="children">
+                <li class="children">
                     <n-link to="/blog">
                         <h5 class="text-dark font-weight-bold text-capitalize mb-0 roboto-condensed-font">BLOG</h5>
                     </n-link>
-                </li> -->
+                </li>
                 
                 <!-- 
                 <li class="menu-item-has-children">

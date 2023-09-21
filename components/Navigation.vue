@@ -50,11 +50,11 @@
                    
                 </ul>
             </li>
-            <!-- <li class="children">
+            <li class="children">
                 <n-link to="/blog">
                    Blogs
                 </n-link>
-            </li> -->
+            </li>
              <!-- <li class="has-children">
                 <nuxt-link to="">
                     <span class="menu-text" style="font-family:'Roboto Condensed', sans-serif' !important ">About Us</span>
