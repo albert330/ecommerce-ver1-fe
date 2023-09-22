@@ -17,13 +17,14 @@
         <div class="table-responsive mb-0">
             <b-table :items="machineList" :fields="fields" responsive="md" :per-page="0" :current-page="params.page" show-empty :busy="isLoading">
                 <template #cell(product_id)="data">
-                    <div class="d-flex align-items-center">
-                        <img :src="assetUrl + data.item?.image[0]?.path" width="75" height="75">
-                        <p class="ml-2">
+                    <div class="md:d-flex align-items-center lg:d-flex align-items-center">
+                        <img :src="assetUrl + data.item?.image[0]?.path" width="75" height="75" style="float: left; margin-right: 10px;">
+                        <p>
                             {{ data.item?.product?.name }}
                         </p>
                     </div>
                 </template>
+
                 <template v-slot:cell(purchase_date)="data">
                     {{ data.item.purchase_date ? dateFormat(data.item.purchase_date) : "-" }}
                 </template>
