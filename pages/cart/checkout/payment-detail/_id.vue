@@ -321,6 +321,7 @@ export default {
                 });
         },
         handlePayment() {
+            console.log(this.orderDetail.payment_snap_token)
             snap.pay(this.orderDetail.payment_snap_token, {
                 onSuccess: function (result) {
                     window.location.reload();
