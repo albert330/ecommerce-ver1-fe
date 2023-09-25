@@ -253,6 +253,7 @@ export default {
         script: [
             {
                 src: "https://app.midtrans.com/snap/snap.js",
+                // src: "https://app.sandbox.midtrans.com/snap/snap.js", // untuk test local
                 "data-client-key": "Mid-client-sCjSAYzKeD2JfNfF",
             },
         ],
@@ -321,7 +322,6 @@ export default {
                 });
         },
         handlePayment() {
-            console.log(this.orderDetail.payment_snap_token)
             snap.pay(this.orderDetail.payment_snap_token, {
                 onSuccess: function (result) {
                     window.location.reload();

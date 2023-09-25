@@ -200,8 +200,11 @@
                                 <h6 class="lead fw-700 mb-0" v-if="voucherServices.type == 1">
                                     {{ convertToRupiah(cart?.calculation.sub_total + (shippingServices[shippingServiceId]?.cost[0]?.value ?? 0) - (voucherServices.amount ?? 0)) }}
                                 </h6>
-                                <h6 class="lead fw-700 mb-0" v-if="voucherServices.type == 2">
+                                <h6 class="lead fw-700 mb-0" v-else-if="voucherServices.type == 2">
                                     {{ convertToRupiah(cart?.calculation.sub_total + (shippingServices[shippingServiceId]?.cost[0]?.value ?? 0) - (cart?.calculation.sub_total * ((voucherServices.amount ?? 0 ) / 100 ))) }}
+                                </h6>
+                                <h6 class="lead fw-700 mb-0" v-else>
+                                    {{ convertToRupiah(cart?.calculation.sub_total + (shippingServices[shippingServiceId]?.cost[0]?.value ?? 0)) }}
                                 </h6>
                             </div>
                             <button class="btn btn-md btn-primary btn-block text-uppercase" @click="handleConfirm" :disabled="isLoadingCheckout">{{ isLoadingCheckout ? "processing..." : "place order" }}</button>
