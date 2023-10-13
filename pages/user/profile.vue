@@ -152,12 +152,15 @@ export default {
                 this.$axios
                     .put("/api/v1/private/my-profile/change-password", this.payload2)
                     .then((res) => {
-                        this.$bvToast.toast("Alamat berhasil ditambahkan", {
+                        this.$bvToast.toast("Berhasil mengubah password", {
                             title: `Success`,
                             variant: "success",
                             solid: true,
                         });
                         this.isDisabled2 = false;
+                        this.payload2.current_password = "";
+                        this.payload2.password = "";
+                        this.payload2.password_confirmation = "";
                     })
                     .catch((err) => {
                         console.log(err);
