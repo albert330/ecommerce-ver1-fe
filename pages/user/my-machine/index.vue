@@ -31,7 +31,7 @@
                 <template v-slot:cell(action)="data">
                     <nuxt-link class="btn btn-md btn-info px-3 py-2" :to="'/user/my-machine/edit/' + data.item.id">Edit</nuxt-link>
                     <!-- <nuxt-link class="btn btn-md btn-primary px-3 py-2" :to="'/user/my-machine/' + data.item.id">Detail</nuxt-link> -->
-                    <button class="btn btn-md btn-danger px-3 py-2" @click="destroy(data.item.id)">
+                    <button class="btn btn-md btn-danger px-3 py-2" @click="handleDelete(data.item.id)">
                         Delete
                     </button>
                 </template>
@@ -46,6 +46,17 @@
                     <div class="text-muted">Total {{ total }} data.</div>
                 </template>
             </b-table>
+            <b-modal id="modalConfirm" title="Confirmation" size="md" centered>
+                <template #default>
+                    <p class="mb-0">Are you sure to delete this machine ?</p>
+                </template>
+                <template #modal-footer>
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-md btn-info mr-3" @click="closeModal()">Cancel</button>
+                        <button class="btn btn-md btn-danger" @click="destroy()" >Delete</button>
+                    </div>
+                </template>
+            </b-modal>
         </div>
         <div class="d-flex">
             <div class="ml-auto">
@@ -100,6 +111,7 @@ export default {
             },
             total: 0,
             keyword: "",
+            getId: "",
         };
     },
     watch: {
@@ -154,10 +166,14 @@ export default {
             var t = new Date(date);
             return t.getDate() + " " + monthNames[t.getMonth()] + " " + t.getFullYear();
         },
-        destroy(by_id) {
+        handleDelete(by_id) {
+            this.getId = by_id;
+            this.$bvModal.show("modalConfirm");
+        },
+        destroy() {
             let params = {
                 by_email: this.email,
-                by_id: by_id,
+                by_id: this.getId,
             }
             this.$axios.delete("/api/v1/private/machine/destroy", {
                 params
@@ -168,10 +184,12 @@ export default {
                     variant: "success",
                     solid: true,
                 });
+                this.$bvModal.hide("modalConfirm");
                 this.getMachine();
             })
             .catch(err => {
                 console.log(err);
+                this.$bvModal.hide("modalConfirm");
             });
         },
     },
