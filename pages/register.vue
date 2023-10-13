@@ -38,7 +38,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="phone">Phone</label>
-                                <input class="form-control" type="text" id="phone" name="phone" placeholder="Phone" v-model="payload.phone" />
+                                <input class="form-control" type="number" min="0" id="phone" name="phone" placeholder="Phone" v-model="payload.phone" />
                             </div>
                            
 
