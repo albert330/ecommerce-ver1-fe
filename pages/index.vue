@@ -8,10 +8,10 @@
                     </nuxt-link>
                 </div>
             </swiper>
-            <div class="banner-slider-prev swiper-button-prev banner-slider-nav">
+            <div class="banner-slider-prev swiper-button-prev banner-slider-nav" v-if="slider.length > 1">
                 <i class="fal fa-angle-left"></i>
             </div>
-            <div class="banner-slider-next swiper-button-next banner-slider-nav">
+            <div class="banner-slider-next swiper-button-next banner-slider-nav" v-if="slider.length > 1">
                 <i class="fal fa-angle-right"></i>
             </div>
         </div>
@@ -227,10 +227,11 @@ export default {
             ],
             categories: [],
             isLoadingCategories: true,
+            autoPlaySlider: false, 
             bannerOption: {
                 loop: true,
                 speed: 1000,
-                autoplay: true,
+                autoplay: this.autoPlaySlider,
                 delay: 5000,
                 navigation: {
                     nextEl: ".banner-slider-next",
@@ -277,6 +278,10 @@ export default {
                 console.log(err);
                 this.isLoadingCategories = false;
             });
+    },
+    created() {
+      this.autoPlaySlider = this.slider.length > 1;
+      this.bannerOption.autoplay = this.autoPlaySlider;
     },
 };
 </script>
