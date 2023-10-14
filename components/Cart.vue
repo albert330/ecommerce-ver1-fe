@@ -189,7 +189,7 @@
                     <p class="fs-14 fw-700 mb-0">Total :</p>
                     <h5 class="mb-0">{{ convertToRupiah(cart.calculation?.sub_total ?? 0) }}</h5>
                 </div>
-                <nuxt-link to="/cart" class="d-block"><button class="btn btn-md btn-primary btn-block text-uppercase" @click="$parent.popupCartToggle()">checkout</button></nuxt-link>
+                <button class="btn btn-md btn-primary btn-block text-uppercase" @click="checkoutAndRefreshCart(); $parent.popupCartToggle();">checkout</button>
             </div>
         </div>
     </div>
@@ -299,6 +299,14 @@ export default {
 
                 this.getCart();
             }
+        },
+        checkoutAndRefreshCart() {
+            this.getCart();
+
+            clearTimeout(this.timer);
+            this.timer = setTimeout(() => {
+                this.$router.push('/cart');
+            }, 1000);
         },
         isJsonString(str) {
             try {
