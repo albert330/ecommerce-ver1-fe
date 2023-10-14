@@ -82,6 +82,13 @@ export default {
     computed: {
         ...mapState(["profile"]),
     },
+    watch: {
+        "payload.province": function (newProvince, oldProvince) {
+            if (!newProvince) {
+                this.payload.city = "";
+            }
+        },
+    },
     data() {
         return {
             payload: {
@@ -96,6 +103,7 @@ export default {
                 fk_user_id: "",
                 postal_code: "",
             },
+            newProvince:"",
             provinces: [],
             cities: [],
             isDisabled: false,
@@ -104,15 +112,14 @@ export default {
     },
     mounted() {
         this.getProvince();
+        this.getCity();
 
         if (this.method === "PUT") {
             this.buttonTitle = "Change Address";
             this.payload = { ...this.detailAddress };
             this.payload.province = this.detailAddress.province.id;
             this.payload.city = this.detailAddress.city.id;
-
-            this.getProvince();
-            this.getCity();
+            this.newProvince = "";
         }
     },
     methods: {
@@ -220,6 +227,10 @@ export default {
                 .get("/api/v1/publics/shipping/city", { params: { id: "", province_id: this.payload.province } })
                 .then((res) => {
                     this.cities = res.data.data;
+                    if(this.payload.province !== this.detailAddress.province.id){
+                        this.newProvince = this.payload.province;
+                        this.payload.city = "";
+                    }
                 })
                 .catch((err) => {
                     console.log(err);
