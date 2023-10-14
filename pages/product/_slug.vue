@@ -103,7 +103,7 @@
                                                 <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                                             </svg>
                                         </button>
-                                        <input type="text" class="form-control-qty mx-2" v-model="quantity" />
+                                        <input type="text" class="form-control-qty mx-2" v-model="quantity" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
                                         <button class="btn btn-outline-primary btn-qty rounded-circle p-0" @click="plusQty">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                                                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
@@ -399,6 +399,10 @@ export default {
             const diffItem = cartData.map((item) => ({ ...item })).filter((el) => el.variant_id != this.variantId);
             let tempData = [];
 
+            if(parseInt(this.quantity) <= 0){
+                this.quantity = 1;
+            }
+
             if (sameItem.length > 0) {
                 sameItem[0].qty = parseInt(sameItem[0].qty) + parseInt(this.quantity);
                 if (sameItem[0].qty > this.variant?.list[this.variantParentId]?.child[this.variantChildId].stock && this.variant?.list[this.variantParentId]?.child[this.variantChildId].is_ignore_stock === "INACTIVE") {
@@ -474,6 +478,8 @@ export default {
         minQty() {
             if (this.quantity > 1) {
                 this.quantity -= 1;
+            } else{
+                this.quantity = 1;
             }
         },
     },

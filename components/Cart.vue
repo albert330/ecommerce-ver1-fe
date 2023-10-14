@@ -55,7 +55,7 @@
                                                                 <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                                                             </svg>
                                                         </button>
-                                                        <input type="text" class="form-control-qty mx-2" v-model="item.qty" readonly />
+                                                        <input type="text" class="form-control-qty mx-2" v-model="item.qty" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" @input="updateQty(item.variant_id, $event)"/>
                                                         <button class="btn btn-outline-primary btn-qty rounded-circle p-0" @click="plusQty(item.variant_id)">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                                                                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
@@ -315,6 +315,30 @@ export default {
                 return false;
             }
             return true;
+        },
+        updateQty(id, event) {
+            const newValue = parseInt(event.target.value);
+
+            if(newValue > 0 && newValue !== NaN){
+                clearTimeout(this.timer);
+                this.timer = setTimeout(() => {
+                    this.inputQty(id, newValue);
+                }, 2000);
+            }
+        },
+        inputQty(id, value) {
+            if(value != "" && value != 0){
+                const cartData = [...this.cartPayload.data];
+                let sameItem = cartData.filter((el) => el.variant_id == id).map((item) => ({ ...item }));
+                let diffItem = cartData.filter((el) => el.variant_id != id).map((item) => ({ ...item }));
+                let tempData = [];
+    
+                sameItem[0].qty = value;
+                tempData = [...sameItem, ...diffItem];
+                this.cartPayload.data = [...tempData];
+    
+                this.getCart();
+            }
         },
     },
 };
