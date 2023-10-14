@@ -23,7 +23,7 @@
                 <div class="mb-3">
                     <label>Province</label>
                     <select class="form-control" v-model="payload.province" @change="getCity()">
-                        <option value="">Choose Province</option>
+                        <option value="" disabled hidden>Choose Province</option>
                         <option :value="item.province_id" v-for="(item, index) in provinces" :key="index">
                             {{ item.province }}
                         </option>
@@ -34,7 +34,7 @@
                 <div class="mb-3">
                     <label>City</label>
                     <select class="form-control" v-model="payload.city" :disabled="payload.province == ''">
-                        <option value="">Choose City</option>
+                        <option value="" disabled hidden>Choose City</option>
                         <option :value="item.city_id" v-for="(item, index) in cities" :key="index">
                             {{ item.city_name }}
                         </option>
@@ -81,13 +81,6 @@ export default {
     props: ["method", "detailAddress"],
     computed: {
         ...mapState(["profile"]),
-    },
-    watch: {
-        "payload.province": function (newProvince, oldProvince) {
-            if (!newProvince) {
-                this.payload.city = "";
-            }
-        },
     },
     data() {
         return {
