@@ -96,6 +96,7 @@ export default {
             isSticky: false,
             isHidden: true,
             keywords: "",
+            keyword: "",
         };
     },
     computed: {
@@ -119,6 +120,7 @@ export default {
         }
 
         this.keywords = this.$route.query?.keyword ?? "";
+        this.keyword = this.$route.query?.keyword ?? "";
 
         window.addEventListener("scroll", () => {
             let scrollPos = window.scrollY;
@@ -142,7 +144,12 @@ export default {
         },
         onSubmit() {
             if (this.keywords && this.keywords !== this.$store.state.keyword) {
-                let query = { keyword: this.keywords };
+                let query = { 
+                    keyword: this.keyword,
+                    category_id: this.$route.query?.category_id ?? "",
+                    subcategory_id: this.$route.query?.subcategory_id ?? "",
+                };
+                
 
                 this.$store.commit("setKeyword", this.keywords);
                 this.$router.push({
