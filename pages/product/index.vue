@@ -105,7 +105,7 @@
                                 <h3 class="text-black mb-0">{{ categories.length ? (keyword ? `Search Result "${keyword}"` : "All Product") : keyword ? `Search Result "${keyword}"` : subCategoryId ? subcategories?.filter((el) => el.id == subCategoryId)[0].name : categories?.name }}</h3>
                                 <button class="btn btn-sm btn-primary px-2" v-if="keyword" @click="clearKeyword()">Remove Keyword</button>
                             </div>
-                            <div class="d-flex align-items-center" v-if="products.length > 0">
+                            <div class="d-flex align-items-center">
                                 <span class="fw-700">Filter&nbsp;</span>
                                 <select class="form-control" v-model="sortType" @change="onChangeSort" style="min-width: 120px">
                                     <option value="">Set Default</option>
