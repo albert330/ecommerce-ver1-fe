@@ -171,6 +171,7 @@
                                         <div v-if="voucherServices.type == 2">
                                             <p>{{ voucherServices.amount }} %</p>
                                         </div>
+                                        <button class="btn btn-md btn-danger btn-block text-uppercase mt-3" @click="handleRemoveVoucher" :disabled="isLoadingVoucher">{{ isLoadingVoucher ? "processing..." : "Remove Voucher" }}</button>
                                     </div>
                                 </div>
                             </form>
@@ -541,6 +542,17 @@ export default {
             }
 
             this.$bvModal.show("modalConfirm");
+        },
+        handleRemoveVoucher() {
+            this.isLoadingVoucher = true;
+            this.$bvToast.toast('Voucher has been successfully deleted', {
+                title: `Success`,
+                variant: "success",
+                solid: true,
+            });
+            this.isVoucherServices = false;
+            this.isLoadingVoucher = false;
+            this.voucherServices.amount = 0;
         },
         plusQty() {
             this.quantity += 1;
