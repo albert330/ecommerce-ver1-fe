@@ -225,7 +225,7 @@ export default {
             this.$axios
                 .get("/api/v1/publics/category-blog/show", {
                     params: {
-                       
+                        status: 1,
                     },
                 })
                 .then((res) => {
