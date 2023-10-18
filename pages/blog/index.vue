@@ -141,6 +141,7 @@ export default {
                 keyword: "",
                 category_id: "",
                 sort_type: "asc",
+                status:"PUBLISH",
             },
             page: {
                 from: null,
