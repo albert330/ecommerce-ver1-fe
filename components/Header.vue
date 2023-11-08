@@ -100,7 +100,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["isLogin", "token", "keyword", "cart", "showPopupCart"]),
+        ...mapState(["isLogin", "token", "cart", "showPopupCart"]),
     },
     mounted() {
         const cartLocal = localStorage.getItem("cart");
@@ -140,6 +140,7 @@ export default {
 
     methods: {
         onChange(event) {
+            this.keyword = event.target.value;
             this.keywords = event.target.value;
         },
         onSubmit() {
