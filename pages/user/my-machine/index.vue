@@ -135,6 +135,9 @@ export default {
         this.getMachine();
     },
     methods: {
+        closeModal() {
+            this.$bvModal.hide("modalConfirm");
+        },
         getMachine() {
             const email = this.$cookies.get("email");
             this.isLoading = true;
