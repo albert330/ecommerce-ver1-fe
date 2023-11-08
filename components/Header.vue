@@ -23,7 +23,7 @@
                                         <span class="input-group-text" id="header-search"><i class="far fa-search"></i></span>
                                     </div>
 
-                                    <input type="text" class="form-control" placeholder="Cari kopi,alat kopi..." aria-describedby="header-search" :value="keyword" @change="onChange" />
+                                    <input type="text" class="form-control" placeholder="Cari kopi,alat kopi..." aria-describedby="header-search" v-model="keyword" @change="onChange" />
                                 </div>
                             </form>
                         </div>
@@ -89,7 +89,7 @@
 
 <script>
 import { mapState } from "vuex";
-
+import { eventBus } from "../plugins/eventBus";
 export default {
     data() {
         return {
@@ -139,6 +139,10 @@ export default {
     },
 
     methods: {
+        clearKeyword() {
+            this.keyword = null;
+            this.keywords = null;
+        },
         onChange(event) {
             this.keyword = event.target.value;
             this.keywords = event.target.value;
@@ -191,6 +195,11 @@ export default {
                 document.body.classList.remove("overflow-hidden");
             }
         },
+    },
+    created() {
+        eventBus.$on("clear-header-keyword", () => {
+            this.clearKeyword();
+        });
     },
 };
 </script>

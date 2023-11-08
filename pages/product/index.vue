@@ -146,6 +146,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { eventBus } from "../../plugins/eventBus";
 export default {
     head() {
         return {
@@ -355,7 +356,12 @@ export default {
             this.params.keyword = "";
             this.$store.commit("setKeyword", "");
             this.params.page = 1;
+            let query = { ...this.$route.query };
+            delete query["keyword"];
+            delete query["category_id"];
+            delete query["subcategory_id"];
 
+            eventBus.$emit("clear-header-keyword");
             this.$router.push({
                 path: "/product",
                 query: "",
