@@ -553,6 +553,10 @@ export default {
             this.isVoucherServices = false;
             this.isLoadingVoucher = false;
             this.voucherServices.amount = 0;
+            this.voucherServices.code = '';
+            this.voucherServices.amount = '';
+            this.voucherServices.type = '';
+            this.voucherServices.id = '';
         },
         plusQty() {
             this.quantity += 1;
