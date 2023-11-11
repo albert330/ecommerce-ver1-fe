@@ -38,18 +38,18 @@
             <div class="category-slider bg-white border-top border-bottom py-3" id="categorySlider" v-if="!isLoadingCategory">
                 <div class="container">
                     <swiper :options="categoryOption" ref="categorySlider">
-                        <div class="swiper-slide text-center" v-if="!categories.length" style="width: 100px !important;">
+                        <div class="swiper-slide swiper-slide-custom text-center" v-if="!categories.length" style="width: 100px !important;">
                             <div class="roboto-condensed-font fs-14 fw-700 text-uppercase cursor-pointer py-1" @click="removeQueryCatAndSubCat()">
                                 <span :class="{ 'border-bottom border-dark': keyword == '' && categoryId == '' && subCategoryId == '' }">All Categories</span>
                             </div>
                         </div>
-                        <div class="swiper-slide text-center" style="width: 100px;">
+                        <div class="swiper-slide swiper-slide-custom text-center" style="width: 100px;">
                             <div class="roboto-condensed-font fs-14 fw-700 text-uppercase cursor-pointer py-1" @click="removeQuerySubCat()">
                                 <span :class="{ 'border-bottom border-dark': subCategoryId == '' }">{{ categories.length ? "All Categories" : "All " + categories?.name }}</span>
                             </div>
                         </div>
                         <template v-if="!categoryId && categories.length">
-                            <div class="swiper-slide text-center" v-for="item in categories" :key="item.id" style="width: 100px;">
+                            <div class="swiper-slide swiper-slide-custom text-center" v-for="item in categories" :key="item.id" style="width: 100px;">
                                 <div class="roboto-condensed-font fs-14 fw-700 text-uppercase py-1" v-if="$route.query.keyword">
                                     <nuxt-link :to="{ path: '/product', query: { keyword, category_id: item.id } }" :class="{ 'border-bottom border-dark': item.id == subCategoryId }">{{ item.name }}</nuxt-link>
                                 </div>
@@ -59,7 +59,7 @@
                             </div>
                         </template>
                         <template v-else>
-                            <div class="swiper-slide text-center" v-for="item in subcategories" :key="item.id" style="width: 100px;">
+                            <div class="swiper-slide swiper-slide-custom text-center" v-for="item in subcategories" :key="item.id" style="width: 100px;">
                                 <div class="roboto-condensed-font fs-14 fw-700 text-uppercase py-1" v-if="$route.query.keyword">
                                     <nuxt-link :to="{ path: '/product', query: { keyword, category_id:categoryId, subcategory_id: item.id } }" :class="{ 'border-bottom border-dark': item.id == subCategoryId }">{{ item.name }}</nuxt-link>
                                 </div>
@@ -499,7 +499,7 @@ export default {
         font-weight: 700;
     }
 }
-.swiper-slide{
+.swiper-slide-custom{
     width: 150px !important;
     margin-right: 10px !important;
 }

@@ -1,42 +1,27 @@
 <template>
     <div>
         <div class="banner-slider">
-          <b-carousel ref="banner" controls :options="bannerOption">
-            <b-carousel-slide v-for="(item, index) in slider" :key="index" :img-src="item.image" :img-alt="item.altText"></b-carousel-slide>
-          </b-carousel>
-          <div class="banner-slider-prev swiper-button-prev banner-slider-nav" v-if="slider.length > 1" @click="prev()">
-            <i class="fal fa-angle-left"></i>
-          </div>
-          <div class="banner-slider-next swiper-button-next banner-slider-nav" v-if="slider.length > 1" @click="next()">
-            <i class="fal fa-angle-right"></i>
-          </div>
+            <swiper :options="bannerOption">
+                <div class="swiper-slide" v-for="(item, index) in slider" :key="index">
+                    <nuxt-link :to="{ path: '' + item.link + '' }" class="w-100">
+                        <img :src="item.image" alt="banner" class="w-100" />
+                    </nuxt-link>
+                </div>
+            </swiper>
+            <div class="banner-slider-prev swiper-button-prev banner-slider-nav" v-if="slider.length > 1">
+                <i class="fal fa-angle-left"></i>
+            </div>
+            <div class="banner-slider-next swiper-button-next banner-slider-nav" v-if="slider.length > 1">
+                <i class="fal fa-angle-right"></i>
+            </div>
         </div>
 
         <div class="section-fluid" style="background: #f8f8f8">
             <div class="container">
                 <h2 class="text-center mb-4">Explore Coffee</h2>
                 <div class="product-slider pb-3" id="categorySliderHome" v-if="categories.length > 0">
-                  <!-- <b-carousel ref="category" controls :interval="5000" :options="categoryOption">
-                    <b-carousel-slide v-for="(item, index) in categories" :key="index" :img-src="assetUrl + item.image" :img-alt="item.name">
-                      <div class="bg-white shadow text-center p-2 p-sm-4">
-                        <nuxt-link :to="{ path: '/product', query: { category_id: item.id } }">
-                          <img :src="assetUrl + item.image" class="w-100 mb-2" :alt="item.name" v-if="item.image" />
-                          <img src="https://dummyimage.com/640x1:1/e4e4e4/e4e4e4" class="w-100 mb-2" :alt="item.name" v-else />
-                        </nuxt-link>
-                        <h5 class="text-primary font-weight-bold text-capitalize mb-0">
-                          {{ item.name }}
-                        </h5>
-                      </div>
-                    </b-carousel-slide>
-                  </b-carousel>
-                  <div class="banner-slider-prev swiper-button-prev banner-slider-nav" v-if="categories.length > 1" @click="prevCategory()">
-                    <i class="fal fa-angle-left"></i>
-                  </div>
-                  <div class="banner-slider-next swiper-button-next banner-slider-nav" v-if="categories.length > 1" @click="nextCategory()">
-                    <i class="fal fa-angle-right"></i>
-                  </div> -->
-                    <swiper ref="category" :options="categoryOption">
-                        <div class="text-center" v-for="(item, index) in categories" :key="index">
+                    <swiper :options="categoryOption">
+                        <div class="swiper-slide text-center" v-for="(item, index) in categories" :key="index">
                             <div class="bg-white shadow text-center p-2 p-sm-4">
                                 <nuxt-link :to="{ path: '/product', query: { category_id: item.id } }">
                                     <img :src="assetUrl + item.image" class="w-100 mb-2" :alt="item.name" v-if="item.image" />
@@ -48,10 +33,10 @@
                             </div>
                         </div>
                     </swiper>
-                    <div class="banner-slider-prev swiper-button-prev banner-slider-nav" @click="prevCategory()">
+                    <div class="banner-slider-prev swiper-button-prev banner-slider-nav">
                         <i class="fal fa-angle-left"></i>
                     </div>
-                    <div class="banner-slider-next swiper-button-next banner-slider-nav" @click="nextCategory()">
+                    <div class="banner-slider-next swiper-button-next banner-slider-nav">
                         <i class="fal fa-angle-right"></i>
                     </div>
                 </div>
@@ -274,20 +259,6 @@ export default {
                 },
             },
         };
-    },
-    methods: {
-      prev() {
-        this.$refs.banner.prev()
-      },
-      next() {
-        this.$refs.banner.next()
-      },
-      prevCategory() {
-        this.$refs.category.prev();
-      },
-      nextCategory() {
-        this.$refs.category.next();
-      },
     },
     mounted() {
         this.$axios
