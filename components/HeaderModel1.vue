@@ -8,22 +8,22 @@
                         <div class="col-auto">
                             <div class="header-logo">
                                 <n-link to="/">
-                                    <img class="light-logo" :src="logoHeader" />
+                                       <img class="light-logo" :src="logoHeader" />
                                     <img class="dark-logo" :src="logoHeader" />
+                                
                                 </n-link>
                             </div>
                         </div>
                         <!-- Header Logo End -->
 
                         <!-- Header Main Menu Start -->
-                        <div class="col d-none d-xl-block">
+                        <div class="col d-none d-xl-block" >
                             <form @submit.prevent="onSubmit">
-                                <div class="input-group input-group-search">
+                                <div class="input-group input-group-search rounded-pill overflow-hidden">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="header-search"><i class="far fa-search"></i></span>
+                                        <span class="input-group-text border-0" id="header-search"><i class="far fa-search"></i></span>
                                     </div>
-
-                                    <input type="text" class="form-control" placeholder="Cari produk.." aria-describedby="header-search" v-model="keyword" @change="onChange" />
+                                    <input type="text" class="form-control border-0" placeholder="Cari produk.." aria-describedby="header-search" v-model="keyword" @change="onChange" />
                                 </div>
                             </form>
                         </div>

@@ -3,59 +3,59 @@
         <div class="section-fluid" style="background-color: #e4e4e4">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-11 col-lg-10 col-xl-9 bg-white rounded-lg shadow p-3 p-md-4 p-lg-5 mb-4" v-if="orderDetail && orderDetail.payment_status && (orderDetail.payment_status == 'SUCCESS' || orderDetail.payment_status == 'UNPAID' || orderDetail.payment_status == 'PENDING' || orderDetail.payment_status == 'CANCEL')">
+                    <div class="col-11 col-lg-10 col-xl-9 bg-white rounded-lg shadow p-3 p-md-4 p-lg-5 mb-4" v-if="orderDetail && orderDetail.payment_method == 'Midtrans' && orderDetail.payment_status && (orderDetail.payment_status == 'SUCCESS' || orderDetail.payment_status == 'UNPAID' || orderDetail.payment_status == 'PENDING' || orderDetail.payment_status == 'CANCEL')">
                         <div class="row" v-if="orderDetail.payment_status == 'UNPAID'">
                             <div class="col-lg-6 pb-4 pb-lg-0" v-if="orderProduct && orderProduct.data_calculation">
-                                <h3 class="mb-1">Amount to Pay</h3>
+                                <h3 class="mb-1">Total </h3>
                                 <h3 class="fw-300 mb-0">
                                     {{ convertToRupiah(orderProduct?.data_calculation?.grand_total) }}
                                 </h3>
                                 <div class="border rounded px-3 py-2 fw-700 d-inline-block h4 mt-3" :class="{ 'border-success text-success': orderDetail.payment_status == 'SUCCESS', 'border-warning text-warning': orderDetail.payment_status == 'UNPAID', 'border-dark text-dark': orderDetail.payment_status == 'PENDING', 'border-danger text-danger': orderDetail.payment_status == 'CANCEL' }">{{ orderDetail.payment_status }}</div>
                             </div>
                             <div class="col-lg-6">
-                                <h3 class="mb-2">Payment</h3>
-                                <h5 class="fw-300 mb-3">Please click <b>Pay now</b> to process your order</h5>
+                                <h3 class="mb-2">Pembayaran</h3>
+                                <h5 class="fw-300 mb-3">Klik<b>Bayar Sekarang</b> untuk proses pesanan anda</h5>
                                 <div class="d-flex flex-column flex-sm-row align-items-md-center">
-                                    <button class="btn btn-md btn-primary mr-sm-2 mb-2 mb-sm-0" @click="handlePayment()">Pay Now</button>
-                                    <nuxt-link :to="'/user/order-list/' + $route.params.id" class="btn btn-md btn-outline-primary">View My Order</nuxt-link>
+                                    <button class="btn btn-md btn-primary mr-sm-2 mb-2 mb-sm-0" @click="handlePayment()">Bayar Sekarang</button>
+                                    <nuxt-link :to="'/user/order-list/' + $route.params.id" class="btn btn-md btn-outline-primary">Lihat Pesanan Saya</nuxt-link>
                                 </div>
                             </div>
                         </div>
                         <div class="row" v-if=" orderDetail.payment_status == 'PENDING'">
                             <div class="col-lg-6 pb-4 pb-lg-0" v-if="orderProduct && orderProduct.data_calculation">
-                                <h3 class="mb-1">Amount to Pay</h3>
+                                <h3 class="mb-1">Total yang Harus Dibayar</h3>
                                 <h3 class="fw-300 mb-0">
                                     {{ convertToRupiah(orderProduct?.data_calculation?.grand_total) }}
                                 </h3>
                                 <div class="border rounded px-3 py-2 fw-700 d-inline-block h4 mt-3" :class="{ 'border-success text-success': orderDetail.payment_status == 'SUCCESS', 'border-warning text-warning': orderDetail.payment_status == 'UNPAID', 'border-dark text-dark': orderDetail.payment_status == 'PENDING', 'border-danger text-danger': orderDetail.payment_status == 'CANCEL' }">{{ orderDetail.payment_status }}</div>
                             </div>
                             <div class="col-lg-6">
-                                <h3 class="mb-2">Your Payment is Pending</h3>
-                                <h5 class="fw-300 mb-3" style="width:330px">Please click instruction button below or check your inbox or spam in your email to know how to pay </h5>
+                                <h3 class="mb-2">Pembayaran Anda Pending</h3>
+                                <h5 class="fw-300 mb-3" style="width:330px">Silakan klik tombol instruksi di bawah atau periksa kotak masuk atau spam di email Anda untuk mengetahui cara pembayaran</h5>
                                 <div class="d-flex flex-column flex-sm-row align-items-md-center">
-                                    <button class="btn btn-md btn-primary mr-sm-2 mb-2 mb-sm-0" @click="handlePayment()">View Instruction</button>
-                                    <nuxt-link :to="'/user/order-list/' + $route.params.id" class="btn btn-md btn-outline-primary">View My Order</nuxt-link>
+                                    <button class="btn btn-md btn-primary mr-sm-2 mb-2 mb-sm-0" @click="handlePayment()">Lihat Instruksi</button>
+                                    <!-- <nuxt-link :to="'/user/order-list/' + $route.params.id" class="btn btn-md btn-outline-primary">View My Order</nuxt-link> -->
                                 </div>
                             </div>
                         </div>
                         <div class="row justify-content-center" v-if="orderDetail.payment_status == 'SUCCESS'">
                             <div class="col-lg-10 text-center">
-                                <h3 class="text-success mb-3">Your payment is completed</h3>
+                                <h3 class="text-success mb-3">Pembayaran Anda Berhasil</h3>
                                 <h5 class="text-primary mb-3">{{ orderDetail.order_number ?? "-" }}</h5>
-                                <h6 class="fw-300 mb-3">Thank you for choosing us! We’re dedicated to giving you the best products possible. If you have any questions, feel free to get in touch. <br/><br/>please check your email or inbox to get latest payment status</h6>
+                                <h6 class="fw-300 mb-3">Terima kasih telah memilih kami! Kami berkomitmen memberikan produk terbaik untuk Anda. Jika ada pertanyaan, jangan ragu untuk menghubungi kami. <br/><br/>Silakan periksa email atau kotak masuk Anda untuk mendapatkan status pembayaran terbaru</h6>
                                 <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
-                                    <nuxt-link to="/product" class="btn btn-md btn-primary mr-md-2 mb-2 mb-md-0">Back To Shop</nuxt-link>
-                                    <nuxt-link :to="'/user/order-list/' + $route.params.id" class="btn btn-md btn-outline-primary">View My Order</nuxt-link>
+                                    <nuxt-link to="/product" class="btn btn-md btn-primary mr-md-2 mb-2 mb-md-0">Kembali ke Toko</nuxt-link>
+                                    <nuxt-link :to="'/user/order-list/' + $route.params.id" class="btn btn-md btn-outline-primary">Lihat Pesanan Saya</nuxt-link>
                                 </div>
                             </div>
                         </div>
                         <div class="row justify-content-center" v-if="orderDetail.payment_status == 'CANCEL'">
                             <div class="col-lg-10 text-center">
-                                <h3 class="mb-3">Your order is canceled</h3>
+                                <h3 class="mb-3">Pesanan Anda Dibatalkan</h3>
                                 <h5 class="text-primary mb-3">{{ orderDetail.order_number ?? "-" }}</h5>
                                 <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
-                                    <nuxt-link to="/product" class="btn btn-md btn-primary mr-md-2 mb-2 mb-md-0">Back To Shop</nuxt-link>
-                                    <nuxt-link :to="'/user/order-list/' + $route.params.id" class="btn btn-md btn-outline-primary">View My Order</nuxt-link>
+                                    <nuxt-link to="/product" class="btn btn-md btn-primary mr-md-2 mb-2 mb-md-0">Kembali ke Toko</nuxt-link>
+                                    <nuxt-link :to="'/user/order-list/' + $route.params.id" class="btn btn-md btn-outline-primary">Lihat Pesanan Saya</nuxt-link>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                     <div class="col-11 col-lg-10 col-xl-9 bg-white rounded-lg shadow p-3 p-md-4 p-lg-5">
                         <div class="d-flex flex-column flex-md-row align-items-start justify-content-between">
                             <div class="order-info mr-2 mb-4 mb-md-0">
-                                <img class="mb-3" src="/images/logo.png" width="160px" />
+                                <img class="mb-5 d-block mx-auto" :src="logoHeader" width="160px" />
                                 <div class="d-flex align-items-start mb-1">
                                     <p class="mb-0" style="width: 85px">Invoice</p>
                                     <span class="mr-2">:</span>
@@ -81,7 +81,7 @@
                                     </p>
                                 </div>
                                 <div class="d-flex align-items-start mb-1">
-                                    <p class="mb-0" style="width: 85px">Order Date</p>
+                                    <p class="mb-0" style="width: 170px">Tanggal Pemesanan</p>
                                     <span class="mr-2">:</span>
                                     <p class="mb-0" style="width: calc(100% - 105px)">
                                         {{ orderDetail.created_at ? dateFormat(orderDetail.created_at) : "-" }}
@@ -89,14 +89,14 @@
                                 </div>
                             </div>
                         </div>
-                        <hr class="my-4" />
-                        <div class="row justify-content-between mb-4">
+                      
+                        <!-- <div class="row justify-content-between mb-4">
                             <div class="col-md-5 pb-4 pb-md-0">
                                 <p class="lead fw-700 mb-3">Bill From</p>
-                                <p class="fw-700 mb-1">PT Javabica Aneka Resources</p>
-                                <p class="mb-1">Rukan Permata Senayan Jalan Tentara Pelajar No D22-26, North Grogol Jakarta 12210</p>
-                                <p class="mb-1">+6221 57940828</p>
-                                <p class="mb-1">info@javabica.com</p>
+                                <p class="fw-700 mb-1">PT xxxx</p>
+                                <p class="mb-1">xxxx</p>
+                                <p class="mb-1">xxxx</p>
+                                <p class="mb-1">xxxx</p>
                             </div>
                             <div class="col-md-5" v-if="orderDetail.billing_address">
                                 <p class="lead fw-700 mb-3">Bill To</p>
@@ -107,20 +107,33 @@
                                 <p class="mb-1">{{ orderDetail.contact_billing_phone }}</p>
                                
                             </div>
-                        </div>
+                        </div> -->
                         <hr />
-                        <h4 class="mb-4">Order Detail</h4>
+                        <h4 class="mb-3">Informasi Pelanggan</h4>
+                        <div class="row mb-4">
+                            <div class="col-lg-6 mb-3 mb-lg-0">
+                                <div class="border rounded-lg p-3" style="background-color: #f8f9fa;">
+                                    <p class="fs-14 mb-1"><span class="fw-600">Nama:</span> {{ orderDetail.shipping_first_name || '-' }}</p>
+                                    <p class="fs-14 mb-1"><span class="fw-600">Email:</span> {{ orderDetail.contact_email || '-' }}</p>
+                                    <p class="fs-14 mb-0"><span class="fw-600">No. Telepon:</span> {{ orderDetail.contact_phone || '-' }}</p>
+                                </div>
+                            </div>
+                           
+                        </div>
+
+                        <hr />
+                        <h4 class="mb-3">Ditel Pemesanan</h4>
                         <div class="mb-4">
                             <div class="table-responsive">
                                 <table class="table text-nowrap">
                                     <thead>
                                         <tr>
-                                            <th>Image</th>
-                                            <th>Product</th>
+                                            <th>Gambar</th>
+                                            <th>Deskripsi</th>
                                             <th></th>
-                                            <th>Qty</th>
+                                            <th>Kuantitas</th>
                                             <th></th>
-                                            <th>Price</th>
+                                            <th>Harga</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -140,7 +153,7 @@
                                                     <p class="fw-700 mb-0">{{ item.product_name }}</p>
                                                     <p class="fs-14 text-secondary-light mb-2" v-if="item.variant_description">{{ item.variant_description }}</p>
                                                     <p class="fs-14 text-secondary-light mb-0" v-if="item.note">
-                                                        <span class="text-dark">Notes:</span>
+                                                        <span class="text-dark">No Pelanggan:</span>
                                                         <br />
                                                         {{ item.note }}
                                                     </p>
@@ -154,7 +167,7 @@
                                         <template v-if="orderProduct && orderProduct.data_calculation">
                                             <tr>
                                                 <td colspan="2" class="border-0"></td>
-                                                <th>Total Item</th>
+                                                <th>Total Barang</th>
                                                 <td>
                                                     {{ orderProduct.data_calculation.total_item }}
                                                 </td>
@@ -163,23 +176,23 @@
                                                     {{ convertToRupiah(orderProduct.data_calculation.sub_total) }}
                                                 </td>
                                             </tr>
-                                            <tr class="pt-0">
+                                            <!-- <tr class="pt-0">
                                                 <td colspan="4" class="border-0 pt-0"></td>
                                                 <th class="border-0 pt-0">Shipping Total</th>
                                                 <td class="text-right border-0 pt-0">
                                                     {{ convertToRupiah(orderProduct.data_calculation.shipping_total) }}
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                             <tr class="pt-0" v-if="orderProduct.data_calculation.discount != 0">
                                                 <td colspan="4" class="border-0 pt-0"></td>
-                                                <th class="border-0 pt-0">Discount</th>
+                                                <th class="border-0 pt-0">Diskon</th>
                                                 <td class="text-right border-0 pt-0">
                                                     -{{ convertToRupiah(orderProduct.data_calculation.discount) }}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td colspan="4" class="border-0 pt-0"></td>
-                                                <th class="border-0 pt-0">Grand Total</th>
+                                                <th class="border-0 pt-0">Total</th>
                                                 <td class="text-right border-0 pt-0">
                                                     {{ convertToRupiah(orderProduct.data_calculation.grand_total) }}
                                                 </td>
@@ -189,8 +202,43 @@
                                 </table>
                             </div>
                         </div>
-                            <hr>
+                        <hr />
+                        <h4 class="mb-3">Detail Pembayaran</h4>
                         <div class="row mb-4">
+                            <div class="col-lg-6">
+                                <p class="mb-0 fw-700 text-uppercase mb-3">Metode Pembayaran</p>
+                                <div class="border rounded-lg p-3" style="background-color: #f8f9fa;">
+                                    <p class="fs-14 fw-700 mb-2">Transfer Bank</p>
+                                    <p class="fs-14 mb-1"><span class="fw-600">Bank:</span> {{ paymentMethods[0]?.label || 'Bank Transfer' }}</p>
+                                    <p class="fs-14 mb-1"><span class="fw-600">No. Rekening:</span> {{ paymentMethods[0]?.account || '-' }}</p>
+                                    <p class="fs-14 mb-0"><span class="fw-600">Atas Nama:</span> {{ paymentMethods[0]?.accountName || '-' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <p class="mb-0 fw-700 text-uppercase mb-3">Instruksi Pembayaran</p>
+                                <div class="border rounded-lg p-3" style="background-color: #fff3cd;">
+                                    <ol class="fs-14 mb-0 pl-3">
+                                        <li class="mb-2">Transfer sesuai jumlah total pembayaran ke rekening yang tertera</li>
+                                        <li class="mb-2">Simpan bukti transfer Anda</li>
+                                        <li class="mb-2">Pembayaran akan diverifikasi dalam 1x24 jam</li>
+                                        <li>Pesanan akan diproses setelah pembayaran terkonfirmasi</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                           <!-- <div class="row mb-4">
+
+                            <div class="col-lg-6">
+                                <p class="mb-0 fw-700 text-uppercase mb-3">Shipping address</p>
+                                   
+                                  <p class="fw-700 mb-1 text-capitalize">
+                                    {{ orderDetail.shipping_first_name + " " + orderDetail.shipping_last_name }}
+                                </p>
+                                <p class="mb-1">{{ `${orderDetail.shipping_address}, ${orderDetail.shipping_city}, ${orderDetail.shipping_province}, ${orderDetail.shipping_postal_code}, ${orderDetail.shipping_country}` }}</p>
+                                <p class="mb-1">{{ orderDetail.contact_phone }}</p>
+                               
+                        </div> -->
+                        <!-- <div class="row mb-4">
 
                             <div class="col-lg-6">
                                 <p class="mb-0 fw-700 text-uppercase mb-3">Shipping address</p>
@@ -206,9 +254,9 @@
                             
                         </div>
                        
-                        </div>
-                         <hr>
-                        <div class="d-flex flex-column flex-md-row justify-content-between">
+                        </div> -->
+                         
+                        <!-- <div class="d-flex flex-column flex-md-row justify-content-between">
                             <div>
                                 <h6 class="leadfw-700 text-uppercase mb-3">Courier Detail</h6>
                                 <div class="d-flex align-items-start mb-1">
@@ -236,7 +284,7 @@
                                 <a :href="'/user/order-list/' + $route.params.id" class="btn btn-md btn-outline-primary mb-2" target="_blank">Detail Invoice</a>
                                 <button class="btn btn-md btn-outline-primary" @click="downloadPDF">Download</button>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -259,7 +307,20 @@ export default {
         ],
     },
     computed: {
-        ...mapState(["assetUrl"]),
+        ...mapState(["assetUrl","logoHeader", "rekeningBank",
+        "rekeningNo",
+        "rekeningAccount"]),
+        
+         paymentMethods() {
+            return [
+                {
+                    value: this.rekeningBank || 'bank',
+                    label: this.rekeningBank || 'Bank Transfer',
+                    account: this.rekeningNo || '-',
+                    accountName: this.rekeningAccount || '-'
+                }
+            ];
+        },
     },
     data() {
         return {
@@ -279,7 +340,7 @@ export default {
             const email = this.$cookies.get("email");
 
             this.$axios
-                .get("/api/v1/private/order/show", {
+                .get("/api/v1/publics/order/show", {
                     params: {
                         by_email: email,
                         by_id: this.$route.params.id,
@@ -289,12 +350,13 @@ export default {
                     this.orderDetail = res.data.data;
 
                     this.$axios
-                        .get("/api/v1/private/order/product/show", {
+                        .get("/api/v1/publics/order/product/show", {
                             params: {
                                 by_order_id: this.$route.params.id,
                             },
                         })
                         .then((res) => {
+                            console.log(res)
                             this.orderProduct = res.data.data;
                         })
                         .catch((err) => {
@@ -307,7 +369,7 @@ export default {
                 });
 
             this.$axios
-                .get("/api/v1/private/order/invoice/show", {
+                .get("/api/v1/publics/order/invoice/show", {
                     params: { by_id: this.$route.params.id },
                     responseType: "blob",
                 })
@@ -347,7 +409,7 @@ export default {
             }).format(money);
         },
     },
-    middleware: "auth",
+   // middleware: "auth",
 };
 </script>
 

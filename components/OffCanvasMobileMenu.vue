@@ -8,7 +8,7 @@
       <div class="mobile-header">
         <div class="logo">
           <n-link to="/">
-            <img src="/images/logo.png" alt="site logo" />
+            <img :src="logoHeader" alt="site logo" />
           </n-link>
         </div>
         <button
@@ -24,10 +24,15 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   components: {
     MobileNavigation: () => import("@/components/MobileNavigation"),
   },
+   computed: {
+        ...mapState(["isLogin", "token", "cart", "showPopupCart","logoHeader"]),
+    },
 
   methods: {
     // offcanvas menu close

@@ -4,7 +4,7 @@
             <div class="container">
                 <template v-if="!isLoading">
                     <template v-if="cartSorted.length > 0 || outOfStockSorted.length > 0">
-                        <h2 class="text-center mb-5">Shopping Cart</h2>
+                        <h2 class="text-center mb-5">Keranjang Belanja</h2>
                         <div class="row mb-4">
                             <div class="col-lg-8">
                                 <div class="mb-4" v-if="cartSorted.length > 0">
@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <div>
-                                                <p class="fs-14 mb-1">Notes</p>
+                                                <p class="fs-14 mb-1">No Pelanggan</p>
                                                 <textarea class="form-control" cols="25" rows="2" v-model="item.note" @blur="onChangeNote($event, item.variant_id)"></textarea>
                                             </div>
                                             <div class="text-right ml-md-auto" v-if="item.more_information != null">
@@ -83,7 +83,7 @@
                                             </div>
                                             <div class="d-flex flex-column ml-md-auto">
                                                 <div class="mb-3">
-                                                    <p class="text-primary fs-14 mb-1">Notes</p>
+                                                    <p class="text-primary fs-14 mb-1">No Pelanggan</p>
                                                     <textarea class="form-control" cols="25" rows="2" v-model="item.note" @blur="onChangeNote($event, item.variant_id)"></textarea>
                                                 </div>
                                                 <div class="d-flex align-items-center ml-auto">
@@ -118,8 +118,8 @@
                                     </div>
                                 </div>
                                 <div v-if="outOfStockSorted.length > 0">
-                                    <h4 class="mb-1">Product not available</h4>
-                                    <p class="mb-4">The product in your shopping cart is out of stock.</p>
+                                    <h4 class="mb-1">Produk Tidak Tersedia</h4>
+                                    <p class="mb-4">Produk di keranjang belanja Anda tidak tersedia.</p>
                                     <div class="out-of-stock border rounded-lg d-none d-md-block bg-white p-3 mb-3" v-for="(item, index) in outOfStockSorted" :key="'desktopOutOfStockItem' + index">
                                         <div class="d-flex align-items-center mb-3">
                                             <div class="pr-3" style="width: 13%">
@@ -166,12 +166,12 @@
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <div>
-                                                <p class="fs-14 mb-1">Notes</p>
+                                                <p class="fs-14 mb-1">No Pelanggan</p>
                                                 <textarea class="form-control" cols="25" rows="2" v-model="item.note" @blur="onChangeNote($event, item.variant_id)"></textarea>
                                             </div>
                                             <div class="text-left ml-md-auto w-50">
-                                                <p class="fs-14" v-if="item.stock > 0">Maximum purchase is {{ item.stock }} item. Reduce the number of purchases to be processed.</p>
-                                                <p class="fs-14" v-else>Stock not available</p>
+                                                <p class="fs-14" v-if="item.stock > 0">Maksimal pembelian {{ item.stock }} item. Kurangi jumlah pembelian agar dapat diproses.</p>
+                                                <p class="fs-14" v-else>Stok tidak tersedia</p>
                                             </div>
                                         </div>
                                     </div>
@@ -195,7 +195,7 @@
                                             </div>
                                             <div class="d-flex flex-column ml-md-auto">
                                                 <div class="mb-3">
-                                                    <p class="text-primary fs-14 mb-1">Notes</p>
+                                                    <p class="text-primary fs-14 mb-1">No Pelanggan</p>
                                                     <textarea class="form-control" cols="25" rows="2" v-model="item.note" @blur="onChangeNote($event, item.variant_id)"></textarea>
                                                 </div>
                                                 <div class="d-flex align-items-center ml-auto">
@@ -237,19 +237,19 @@
                                         <span>Total :</span>
                                         <h5 class="mb-0">{{ convertToRupiah(carts.calculation?.sub_total ?? 0) }}</h5>
                                     </div>
-                                    <nuxt-link to="/cart/checkout" class="btn btn-md btn-primary btn-block text-uppercase">proceed to checkout</nuxt-link>
+                                    <nuxt-link to="/cart/checkout" class="btn btn-md btn-primary btn-block text-uppercase">Lanjut ke Checkout</nuxt-link>
                                 </div>
                             </div>
                         </div>
                     </template>
                     <div class="d-flex flex-column align-items-center justify-content-center text-center" style="height: 300px" v-else>
-                        <h3>Your Cart is empty</h3>
-                     
-                        <nuxt-link to="/product" class="btn btn-md btn-primary">start shopping</nuxt-link>
+                        <h3>Keranjang Belanja Kosong</h3>
+
+                        <nuxt-link to="/product" class="btn btn-md btn-primary">Mulai Belanja</nuxt-link>
                     </div>
                 </template>
                 <template v-else>
-                    <h2 class="roboto-condensed-font text-center mb-5">Shopping Cart</h2>
+                    <h2 class="roboto-condensed-font text-center mb-5">Keranjang Belanja</h2>
                     <div class="row mb-4">
                         <div class="col-lg-8">
                             <div class="border rounded-lg d-none d-md-block bg-white p-3 mb-3" v-for="i in 3" :key="'desktopCartSkeleton' + i">

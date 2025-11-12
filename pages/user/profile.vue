@@ -63,7 +63,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-12">
+        <!-- <div class="col-12">
             <div class="d-flex align-items-center justify-content-between">
                 <h3 class="text-uppercase mb-0">Address List</h3>
                 <button class="btn btn-md btn-primary d-none d-md-block" v-b-modal.modalCreateAddress>Add new address</button>
@@ -76,7 +76,7 @@
                     <FormAddress method="POST" detailAddress="" />
                 </div>
             </b-modal>
-        </div>
+        </div> -->
     </div>
 </template>
 

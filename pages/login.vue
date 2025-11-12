@@ -8,42 +8,71 @@
                 <li class="current">Login</li>
             </ul>
             <div class="row justify-content-center my-4">
-                <div class="col-lg-5">
-                    <div class="login-form-wrapper">
-                        <h3 class="title roboto-condensed-font">Login</h3>
-                        <form class="login-form" @submit.prevent="onSubmit">
-                            <div class="mb-3">
-                                <label for="username">Email or phone number</label>
-                                <input class="form-control" type="text" id="username" name="username" placeholder="Email or phone number" v-model="payload.username" />
+                <div class="col-lg-5 col-md-7">
+                    <div class="card shadow-lg border-0 rounded-lg">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="text-center mb-4">
+                                <h2 class="fw-700 mb-2">Selamat Datang</h2>
+                                <p class="text-muted">Masuk ke akun Anda</p>
                             </div>
 
-                            <div class="mb-4">
-                                   <label  for="password">Password</label>
-                             <b-input-group class="mt-0 mb-2">
-                                <template #append>
-                                <b-input-group-text class="pb-1"><strong class="text-danger"><i class="fa fa-eye text-dark" v-if="viewPass == false" @click="viewPassOption(true)"></i> <i class="fa fa-eye-slash text-dark" v-else @click="viewPassOption(false)"></i> </strong></b-input-group-text>
-                                </template>
-                                <b-form-input label="password"  :type="viewPass == true ? 'text' : 'password'" id="password" name="password" placeholder="Password Confirmation" v-model="payload.password"></b-form-input>
-                                
-                            </b-input-group>
-                            </div>  
-                         
-                            <div class="mb-4">
-                                <div class="d-flex justify-content-end mb-5">
-                                    <nuxt-link to="/forgot-password">Forgot your password?</nuxt-link>
+                            <form @submit.prevent="onSubmit">
+                                <div class="mb-4">
+                                    <label for="username" class="form-label fw-600">Email atau Nomor Telepon</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white border-end-0">
+                                            <i class="far fa-user text-muted"></i>
+                                        </span>
+                                        <input
+                                            class="form-control border-start-0 ps-0"
+                                            type="text"
+                                            id="username"
+                                            name="username"
+                                            placeholder="Masukkan email atau nomor telepon"
+                                            v-model="payload.username"
+                                        />
+                                    </div>
                                 </div>
-                                <p class="fs-14">
-                                    dont have an account?
-                                    <nuxt-link to="/register" class="fw-700">Register now</nuxt-link>
-                                    .
-                                </p>
-                            </div>
-                            <div class="single-input">
-                                <button class="btn btn-primary btn-width-100" :disabled="isDisabled">
-                                    {{ isDisabled ? "Processing..." : "Log In" }}
+
+                                <div class="mb-4">
+                                    <label for="password" class="form-label fw-600">Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white border-end-0">
+                                            <i class="far fa-lock text-muted"></i>
+                                        </span>
+                                        <input
+                                            class="form-control border-start-0 border-end-0 ps-0"
+                                            :type="viewPass ? 'text' : 'password'"
+                                            id="password"
+                                            name="password"
+                                            placeholder="Masukkan password"
+                                            v-model="payload.password"
+                                        />
+                                        <span class="input-group-text bg-white border-start-0 cursor-pointer" @click="viewPassOption(!viewPass)">
+                                            <i class="far" :class="viewPass ? 'fa-eye-slash' : 'fa-eye'" style="color: #6c757d;"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-end mb-4">
+                                    <nuxt-link to="/forgot-password" class="text-primary text-decoration-none fs-14">Lupa password?</nuxt-link>
+                                </div>
+
+                                <button class="btn btn-primary btn-lg w-100 mb-3" :disabled="isDisabled">
+                                    <span v-if="isDisabled">
+                                        <i class="fas fa-spinner fa-spin me-2"></i>Memproses...
+                                    </span>
+                                    <span v-else>Masuk</span>
                                 </button>
-                            </div>
-                        </form>
+
+                                <div class="text-center">
+                                    <p class="fs-14 mb-0">
+                                        Belum punya akun?
+                                        <nuxt-link to="/register" class="fw-700 text-primary text-decoration-none">Daftar sekarang</nuxt-link>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

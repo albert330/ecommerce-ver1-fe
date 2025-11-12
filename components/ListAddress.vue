@@ -97,7 +97,7 @@ export default {
                         solid: true,
                     });
                     this.$bvModal.hide("modalConfirm");
-                    this.$store.dispatch("showProfile");
+                   // this.$store.dispatch("showProfile");
                 })
                 .catch((err) => {
                     // console.log(err);

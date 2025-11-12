@@ -4,10 +4,10 @@
             <div class="container">
                 <ul class="breadcrumb mb-4">
                     <li>
-                        <n-link to="/shop">Shop</n-link>
+                        <n-link to="/shop">Toko</n-link>
                     </li>
                     <li>
-                        <n-link to="/product">Product Lists</n-link>
+                        <n-link to="/product">Dafar Produk</n-link>
                     </li>
                     <li class="current">
                         {{ detailProduct.product?.name ?? "" }}
@@ -96,7 +96,7 @@
                                 </div>
                                 <hr />
                                 <div class="d-flex align-items-center mb-3">
-                                    <p class="fw-700 mb-0">Quantity</p>
+                                    <p class="fw-700 mb-0">Jumlah</p>
                                     <div class="d-flex align-items-center ml-4">
                                         <button class="btn btn-outline-primary btn-qty rounded-circle p-0" @click="minQty">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
@@ -112,8 +112,11 @@
                                     </div>
                                 </div>
                                 <template v-if="variant.list[variantParentId]?.child[variantChildId].stock > 0 || variant.list[variantParentId]?.child[variantChildId].is_ignore_stock === 'ACTIVE'">
-                                    <button class="btn btn-md btn-primary btn-block text-uppercase" @click="addToCart" v-if="!isLoadingCart">Add to cart</button>
-                                    <button class="btn btn-md btn-primary btn-block text-uppercase" disabled v-else>Please Wait...</button>
+                                   <p class="text-primary fs-14 mb-1">masukan no Pelanggan</p>
+                                  <input class="form-control" cols="25" rows="2" v-model="note" placeholder="0812xxxxxx" > 
+                                      <!-- <textarea class="form-control" cols="25" rows="2" v-model="item.note" @blur="onChangeNote($event, item.variant_id)"></textarea> -->
+                                    <button class="btn btn-md btn-primary btn-block text-uppercase mt-2" @click="addToCart" v-if="!isLoadingCart">Tambahkan Ke Keranjang</button>
+                                    <button class="btn btn-md btn-primary btn-block text-uppercase" disabled v-else>Harap Tunggu...</button>
                                 </template>
                                 <template v-else>
                                     <button class="btn btn-md btn-primary btn-block text-uppercase" disabled>Out of Stock</button>
@@ -172,7 +175,7 @@
                                 </b-modal>
                             </div>
                             <!--bagian ini di keluarin lagi kalo udah meeting sama tari dan VY-->
-                            <div class="mt-3 p-4 product_desc-javabica" style="box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1)" v-if="detailProduct.product?.information">
+                            <div class="mt-3 p-4 product_desc-ecommerce" style="box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1)" v-if="detailProduct.product?.information">
                                 <h3>Information</h3>
                                 <hr />
 
@@ -190,7 +193,7 @@
                     </div>
                 </div>
                 <div class="row justify-content-center pb-5">
-                    <div class="col-lg-7 product_desc-javabica">
+                    <div class="col-lg-7 product_desc-ecommerce">
                         <h3>Detail</h3>
                         <hr />
                         <div v-html="detailProduct.product?.desc ?? ''"></div>
@@ -246,7 +249,7 @@
             <div class="container">
                 <div class="row text-center">
                     <div class="col-lg-12">
-                        <h2 class="roboto-condensed-font text-center mb-5">Related Product</h2>
+                        <h2 class="roboto-condensed-font text-center mb-5">Produk Lainnya</h2>
                     </div>
                 </div>
                 <div class="row" v-if="!isLoadingRelated && relatedProducts.length > 0">
@@ -330,6 +333,7 @@ export default {
             variantParentId: 0,
             variantChildId: 0,
             quantity: 1,
+            note: "",
             isLoadingDetail: true,
             isLoadingRelated: true,
             isLoadingCart: false,
@@ -399,6 +403,24 @@ export default {
             const diffItem = cartData.map((item) => ({ ...item })).filter((el) => el.variant_id != this.variantId);
             let tempData = [];
 
+            if(this.note == "") {
+                this.$bvToast.toast("no pelanggan wajib diisi", {
+                title: `Warning`,
+                variant: "Warning",
+                solid: true,
+            });
+            return;
+            }
+
+            if(this.note.length <= 5) {
+                this.$bvToast.toast("no pelanggan harus lebih dari 5 karakter", {
+                title: `Warning`,
+                variant: "Warning",
+                solid: true,
+            });
+            return;
+            }
+
             if(parseInt(this.quantity) <= 0){
                 this.quantity = 1;
             }
@@ -418,7 +440,7 @@ export default {
                     {
                         variant_id: this.variantId,
                         qty: parseInt(this.quantity),
-                        note: "",
+                        note: this.note,
                     },
                 ];
             }
@@ -572,7 +594,7 @@ export default {
         align-items: center;
 
         .item-level {
-            background: $grey-javabica;
+            background: $grey-ecommerce;
             border-right: 3px solid #fff;
             min-width: 20%;
             max-width: 20%;
@@ -588,28 +610,28 @@ export default {
         }
     }
 }
-.product_desc-javabica p {
+.product_desc-ecommerce p {
     margin: 0;
     font-weight: 300;
 }
-.product_desc-javabica table {
+.product_desc-ecommerce table {
     border:none !important;
 }
-.product_desc-javabica table  tr td{
+.product_desc-ecommerce table  tr td{
     padding:15px;
     
    
 }
-.product_desc-javabica table  tr{
+.product_desc-ecommerce table  tr{
 
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
    
 }
-.product_desc-javabica p strong {
+.product_desc-ecommerce p strong {
     margin: 0;
     font-weight: 400;
 }
-.product_desc-javabica img {
+.product_desc-ecommerce img {
     width: 100% !important;
 }
 </style>

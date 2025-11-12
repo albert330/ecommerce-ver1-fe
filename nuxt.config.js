@@ -9,7 +9,7 @@ export default {
     },
     ssr: true,
     head: {
-        title: "Javabica",
+        title: "ecommerce",
         meta: [
             { charset: "utf-8" },
             {

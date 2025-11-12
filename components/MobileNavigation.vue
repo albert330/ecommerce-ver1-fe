@@ -8,17 +8,17 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="header-search"><i class="far fa-search"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Cari kopi,alat kopi..." aria-describedby="header-search" :value="keyword" @change="onChange" />
+                            <input type="text" class="form-control" placeholder="Cari Produk..." aria-describedby="header-search" :value="keyword" @change="onChange" />
                         </div>
                     </form>
                 </li>
 
                 <li class="menu-item-has-children">
-                    <n-link to="/shop"><h5 class="text-dark font-weight-bold text-capitalize mb-0 roboto-condensed-font">SHOP</h5></n-link>
+                    <n-link to=""><h5 class="text-dark font-weight-bold text-capitalize mb-0 roboto-condensed-font">SHOP</h5></n-link>
                     <ul class="sub-menu">
                         <li @click="closeMobileMenu()">
                             <n-link to="/product">
-                                <span class="menu-text">All Product</span>
+                                <span class="menu-text">Semua Produk</span>
                             </n-link>
                         </li>
                         <li v-for="item in categories" :key="item.id" @click="closeMobileMenu()">
@@ -28,85 +28,7 @@
                         </li>
                     </ul>
                 </li>
-                <!-- <li class="menu-item-has-children">
-                    <n-link to="">
-                        <h5 class="text-dark font-weight-bold text-capitalize mb-0 roboto-condensed-font">ABOUT US</h5>
-                    </n-link>
-                    <ul class="sub-menu">
-                        <li @click="closeMobileMenu()">
-                            <n-link to="/about-us?type=1">
-                                <span class="menu-text">Our Coffee</span>
-                            </n-link>
-                        </li>
-                        <li @click="closeMobileMenu()">
-                            <n-link to="/about-us?type=2">
-                                <span class="menu-text">Perfectly Brew For You</span>
-                            </n-link>
-                        </li>
-                        <li @click="closeMobileMenu()">
-                            <n-link to="/about-us?type=3"> 
-                                <span class="menu-text">Classic & Timeless Taste</span>
-                            </n-link>
-                        </li>
-                        <li @click="closeMobileMenu()">
-                            <n-link to="/about-us?type=4">
-                                <span class="menu-text">Stylish & Functional Machines</span>
-                            </n-link>
-                        </li>
-                    </ul>
-                </li> -->
-
-                <li class="menu-item-has-children">
-                    <n-link to="">
-                        <h5 class="text-dark font-weight-bold text-capitalize mb-0 roboto-condensed-font">ABOUT US</h5>
-                    </n-link>
-                    <ul class="sub-menu">
-                        <li @click="closeMobileMenu()">
-                            <n-link to="/about/history">
-                                <span class="menu-text">History</span>
-                            </n-link>
-                        </li>
-                        <li @click="closeMobileMenu()">
-                            <n-link to="/about/sustainability">
-                                <span class="menu-text">Sustainability</span>
-                            </n-link>
-                        </li>
-                         <li @click="closeMobileMenu()">
-                            <n-link to="/store-location">
-                                <span class="menu-text">Store Location</span>
-                            </n-link>
-                        </li>
-                       
-                    </ul>
-                </li>
-                <li class="children">
-                    <n-link to="/blog">
-                        <h5 class="text-dark font-weight-bold text-capitalize mb-0 roboto-condensed-font">BLOG</h5>
-                    </n-link>
-                </li>
-                
-                <!-- 
-                <li class="menu-item-has-children">
-                    <n-link to="">Help / Find Us</n-link>
-                    <ul class="sub-menu">
-                        <li>
-                            <n-link to="/faq">
-                                <span class="menu-text">FAQ</span>
-                            </n-link>
-                        </li>
-                        <li>
-                            <n-link to="/our-location">
-                                <span class="menu-text">Our Location</span>
-                            </n-link>
-                        </li>
-                    </ul>
-                </li> -->
-                <!-- <li class="menu-item-has-children">
-                    <n-link to="/blog">Blog</n-link>
-                </li>
-                <li class="menu-item-has-children">
-                    <n-link to="/business">Business</n-link>
-                </li> -->
+           
             </ul>
         </nav>
     </div>

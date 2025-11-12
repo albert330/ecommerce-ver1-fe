@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="bg-white header-shadow py-3">
-            <div class="container">
+        <div class="bg-primary header-shadow py-3">
+            <div class="container ">
                 <n-link to="/">
-                    <img class="light-logo" src="/images/logo.png" width="160px" />
+                    <img class="light-logo mx-auto" :src=" logoHeader" width="160px" />
                 </n-link>
             </div>
         </div>
@@ -23,16 +23,16 @@
 import { mapState } from "vuex";
 export default {
     computed: {
-        ...mapState(["isVerified"]),
+        ...mapState(["isVerified","logoHeader"]),
     },
     mounted() {
-        this.$store.dispatch("showProfile").then((res) => {
-            if (!res.verified_at) {
-                this.$bvModal.show("modalVerification");
-            } else {
-                this.$bvModal.hide("modalVerification");
-            }
-        });
+        // this.$store.dispatch("showProfile").then((res) => {
+        //     if (!res.verified_at) {
+        //         this.$bvModal.show("modalVerification");
+        //     } else {
+        //         this.$bvModal.hide("modalVerification");
+        //     }
+        // });
     },
     methods: {
         handleRedirect() {

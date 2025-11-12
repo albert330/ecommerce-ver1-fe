@@ -826,14 +826,14 @@ $color in $templateColors {
 }
 
 .section-product {
-    background-image: url('../../static/images/accents-top.png'), url('../../static/images/accents-bottom-left.png'), url('../../static/images/accents-bottom-right.png');
+   // background-image: url('../../static/images/accents-top.png'), url('../../static/images/accents-bottom-left.png'), url('../../static/images/accents-bottom-right.png');
     background-size: auto;
     background-position: center -110px, left bottom, right bottom;
     background-repeat: no-repeat;
 }
 
 .section-product-detail {
-    background-image: url('../../static/images/accents-bottom-left.png'), url('../../static/images/accents-bottom-right.png');
+  //  background-image: url('../../static/images/accents-bottom-left.png'), url('../../static/images/accents-bottom-right.png');
     background-size: auto;
     background-position: left bottom, right bottom;
     background-repeat: no-repeat;
@@ -965,6 +965,7 @@ $value in $templateColors {
 
         & .btn {
             font-family: $roboto;
+         
         }
     }
 

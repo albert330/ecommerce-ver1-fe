@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="section-fluid bg-grey">
+        <div class="section-fluid bg-grey min-vh-100">
             <div class="container">
                 <h2 class="roboto-condensed-font text-center mb-5">Checkout</h2>
                 <div class="row justify-content-center mb-4">
@@ -8,176 +8,107 @@
                         <div class="row">
                             
                             
-                            <div class="col-12">
+                            <div class="col-12 cart-section">
+
                                 <div class="mb-4">
                                     <div class="bg-primary rounded-top p-3">
-                                        <h6 class="lead fw-700 text-white mb-0">Shipping Address</h6>
-                                    </div>
-                                    <div class="bg-white rounded-bottom p-3">
-                                        <div class="mb-3" v-if="selectedAddressId != ''">
-                                            <p class="fw-700 mb-1">{{ selectedAddress?.first_name + " " + selectedAddress?.last_name }}</p>
-                                            <p class="mb-0">{{ selectedAddress?.address + ", " + selectedAddress?.city?.label + ", " + selectedAddress?.province?.label+ ", "+selectedAddress?.postal_code}}</p>
-                                            <p class="mb-2">
-                                                <span class="fw-700">T:</span>
-                                                {{ selectedAddress?.phone_number }}
-                                            </p>
-                                              <p class=" mb-0" style="font-size:0.8rem"><span class="fw-700">courier note: </span>{{ selectedAddress?.courier_note }}</p>
-                                            <p class="mb-0"  style="font-size:0.8rem"><span class="fw-700">address label: </span>{{ selectedAddress?.label_place }}</p>
-                                        </div>
-                                        <button class="btn btn-md btn-outline-primary" v-b-modal.modalListAddress v-if="listAddress.length > 0">Select Shipping Address</button>
-                                        <button class="btn btn-md btn-outline-primary" v-b-modal.modalCreateAddress v-else>New Shipping Address</button>
-                                        <b-modal id="modalListAddress" title="Shipping Address" size="lg" hide-footer>
-                                            <div class="card-body">
-                                                <div class="d-flex justify-content-end">
-                                                    <button class="btn btn-sm btn-primary mb-4" v-b-modal.modalCreateAddress>New Shipping Address</button>
-                                                </div>
-                                                <ListAddress col="col-12" type="shipping" />
-                                            </div>
-                                        </b-modal>
-                                        <b-modal id="modalCreateAddress" title="New Shipping&billing Address" size="lg" hide-footer>
-                                            <div class="card-body">
-                                                <FormAddress method="POST" detailAddress="" />
-                                            </div>
-                                        </b-modal>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="mb-4">
-                                    <div class="bg-primary rounded-top p-3">
-                                        <h6 class="lead fw-700 text-white mb-0">Shipping Courier</h6>
+                                        <h6 class="lead fw-700 text-white mb-0">Data Diri Pelanggan</h6>
                                     </div>
                                     <div class="bg-white rounded-bottom p-3">
                                         <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="mb-3">
-                                                    <label>Select Courier</label>
-                                                    <select class="form-control" v-model="shippingCourier" @change="getShippingServices" :disabled="listAddress.length <= 0">
-                                                        <option value="">--Choose Courier--</option>
-                                                        <option value="jne">JNE</option>
-                                                    </select>
-                                                </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label fw-600">Nama Pelanggan <span class="text-danger">*</span></label>
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    placeholder="Masukkan nama lengkap"
+                                                    v-model="customerData.name"
+                                                />
                                             </div>
-                                            <div class="col-sm-6" v-if="shippingCourier">
-                                                <div class="mb-3">
-                                                    <label>Selected Courier</label>
-                                                    <p class="fw-700 text-uppercase mb-0">{{ shippingCourier }}</p>
-                                                </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label fw-600">Email <span class="text-danger">*</span></label>
+                                                <input
+                                                    type="email"
+                                                    class="form-control"
+                                                    placeholder="contoh@email.com"
+                                                    v-model="customerData.email"
+                                                />
                                             </div>
-                                            <div class="col-12" v-if="shippingCourier">
-                                                <label>Service</label>
-                                                <template v-if="!isLoadingShipping">
-                                                    <div class="row" v-if="shippingServices.length > 0">
-                                                        <div class="col-12" v-for="(item, index) in shippingServices" :key="'service' + item.service">
-                                                            <div class="border rounded-lg position-relative cursor-pointer p-3 mb-3" :class="{ 'border-primary bg-transparent-primary': index == shippingServiceId }" @click="selectShippingService(item, index)">
-                                                                <div class="d-flex align-items-center justify-content-between">
-                                                                    <div>
-                                                                        <p class="fw-700 mb-1">{{ item.service + " - " + item.description }}</p>
-                                                                        <p class="fs-14 mb-0">Estimasi : {{ item.cost[0].etd }} hari</p>
-                                                                    </div>
-                                                                    <div>
-                                                                        <p class="fw-700 text-secondary">{{ convertToRupiah(item.cost[0].value) }}</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <p class="text-center" v-else>Service not available. Please contact out administration for more information.</p>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="row">
-                                                        <div class="col-12" v-for="i in 3" :key="i">
-                                                            <div class="border rounded-lg position-relative cursor-pointer p-3 mb-3">
-                                                                <div class="d-flex align-items-center justify-content-between">
-                                                                    <div>
-                                                                        <b-skeleton width="150px" animation="wave mb-2"></b-skeleton>
-                                                                        <b-skeleton width="130px" height="12px" animation="wave mb-0"></b-skeleton>
-                                                                    </div>
-                                                                    <div>
-                                                                        <b-skeleton width="100px" animation="wave mb-0"></b-skeleton>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </template>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label fw-600">No. Telepon <span class="text-danger">*</span></label>
+                                                <input
+                                                    type="tel"
+                                                    class="form-control"
+                                                    placeholder="08xxxxxxxxxx"
+                                                    v-model="customerData.phone"
+                                                />
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                            <div class="bg-primary rounded-top p-3">
+                                <h6 class="lead fw-700 text-white mb-0">Keranjang Belanja</h6>
+                            </div>
+                            <div class="bg-white rounded-bottom p-3">
+                                <div class="border rounded-lg bg-grey p-3 mb-2" v-for="(item, index) in cart.list" :key="'itemCheckout' + index">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="d-flex">
+                                            <div class="img-ratio1x1 w-78 border rounded-lg mr-3">
+                                                <img :src="assetUrl + item.product_image" />
+                                            </div>
+                                            <div>
+                                                <p class="fs-14 mb-1">{{ item.product_name }}</p>
+                                                <p class="fs-14 fw-700 mb-1" v-if="item.normal_price && item.normal_price != null">
+                                                    <span class="text-old-price fs-14 fw-400 mr-1">{{ convertToRupiah(item.normal_price) }}</span>
+                                                    {{ convertToRupiah(item.purchase_price) }}
+                                                </p>
+                                                <p class="fs-14 fw-700 mb-1" v-else>{{ convertToRupiah(item.purchase_price) }}</p>
+                                                <p class="fs-14 mb-1">
+                                                    <i>{{ item.variant_description }}</i>
+                                                </p>
+                                                <p class="fs-14 mb-0">{{ item.qty }} item</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3 mt-md-0" v-if="item.note">
+                                        <div class="col-12">
+                                            <p class="fs-14 mb-1">No Pelanggan : {{ item.note }}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="mb-4">
-                                    <div class="bg-primary rounded-top p-3">
-                                        <h6 class="lead fw-700 text-white mb-0">Billing Address</h6>
-                                    </div>
-                                    <div class="bg-white rounded-bottom p-3">
-                                        <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" id="checkBillingAddress" v-model="same_as_shipping" @change="onChangeBillingAddress" />
-                                            <label class="form-check-label" for="checkBillingAddress">Make billing address same as shipping address</label>
-                                        </div>
-                                        
-                                        <div class="mb-3" v-if="!same_as_shipping && selectedBillingId != ''">
-                                            <hr />
-                                            <p class="fw-700 mb-1">{{ selectedBilling?.first_name + " " + selectedBilling?.last_name }}</p>
-                                            <p class="mb-0">{{ selectedBilling?.address + ", " + selectedBilling?.city?.label + ", " + selectedBilling?.province?.label+", "+ selectedBilling?.postal_code }}</p>
-                                            <p class="mb-2">
-                                                <span class="fw-700">T:</span>
-                                                {{ selectedBilling?.phone_number }}
-                                            </p>
-                                            <p class=" mb-0" style="font-size:0.8rem"><span class="fw-700">courier note: </span>{{ selectedBilling?.courier_note }}</p>
-                                            <p class="mb-0"  style="font-size:0.8rem"><span class="fw-700">address label: </span>{{ selectedBilling?.label_place }}</p>
-                                        </div>
-                                        <template v-if="!same_as_shipping">
-                                            <button class="btn btn-md btn-outline-primary" v-b-modal.modalListBilling v-if="listAddress.length > 0">Select Billing Address</button>
-                                            <button class="btn btn-md btn-outline-primary" v-b-modal.modalCreateAddress v-else>New Billing Address</button>
-                                        </template>
-                                        <b-modal id="modalListBilling" title="Billing Address" size="lg" hide-footer>
-                                            <div class="card-body">
-                                                <div class="d-flex justify-content-end">
-                                                    <button class="btn btn-sm btn-primary mb-4" v-b-modal.modalCreateAddress>New Billing Address</button>
-                                                </div>
-                                                <ListAddress col="col-12" type="billing" />
-                                            </div>
-                                        </b-modal>
-                                    </div>
+                        </div>
+                        <div>
+                            <div class="bg-primary rounded-top p-3">
+                                <h6 class="lead fw-700 text-white mb-0">Metode Pembayaran</h6>
+                            </div>
+                            <div class="bg-white rounded-bottom p-3">
+                                <div class="form-group mb-3">
+                                    <label class="fw-600 mb-2">Pilih Bank Transfer</label>
+                                    <select class="form-control" v-model="selectedPaymentMethod">
+                                        <option value="">-- Pilih Metode Pembayaran --</option>
+                                        <option v-for="(method, index) in paymentMethods" :key="'payment-' + index" :value="method.value">
+                                            {{ method.label }}
+                                        </option>
+                                    </select>
                                 </div>
+                                <div v-if="selectedPaymentMethod" class="border rounded-lg bg-grey p-3">
+                                    <p class="fs-14 fw-700 mb-2">Detail Rekening Transfer:</p>
+                                    <p class="fs-14 mb-1"><span class="fw-600">Bank:</span> {{ paymentMethods.find(m => m.value === selectedPaymentMethod)?.label }}</p>
+                                    <p class="fs-14 mb-1"><span class="fw-600">No. Rekening:</span> {{ paymentMethods.find(m => m.value === selectedPaymentMethod)?.account }}</p>
+                                    <p class="fs-14 mb-0"><span class="fw-600">Atas Nama:</span> {{ paymentMethods.find(m => m.value === selectedPaymentMethod)?.accountName }}</p>
+                                </div>
+                            </div>
+                        </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="mb-3">
-                            <div class="bg-primary rounded-top p-3">
-                                <h6 class="lead fw-700 text-white mb-0">Voucher</h6>
-                            </div>
-                            <form @submit.prevent="getVoucher" autocomplete="off" class="mb-5">
-                                <div class="bg-white rounded-bottom p-3" v-if="!isVoucherServices">
-                                    <div class="mb-3">
-                                        <label for="code" class="fw-500">Code</label>
-                                        <input class="form-control" type="text" id="code" name="code" v-model="code" placeholder="Ex. XXXXXXXX"/>
-                                    </div>
-                                    <button class="btn btn-md btn-outline-primary btn-block text-uppercase" :disabled="isLoadingVoucher || code == null ||  code == '' ">{{ isLoadingVoucher ? "processing..." : "Use Voucher" }}</button>
-                                </div>
-                                <div class="bg-white rounded-bottom p-3" v-else>
-                                    <div class="mb-3">
-                                        <label class="fw-500">Voucher Code</label>
-                                        <p>{{ voucherServices.code }}</p>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="fw-500">Discount</label>
-                                        <div v-if="voucherServices.type == 1">
-                                            <p>{{ convertToRupiah(voucherServices.amount) }}</p>
-                                        </div>
-                                        <div v-if="voucherServices.type == 2">
-                                            <p>{{ voucherServices.amount }} %</p>
-                                        </div>
-                                        <button class="btn btn-md btn-danger btn-block text-uppercase mt-3" @click="handleRemoveVoucher" :disabled="isLoadingVoucher">{{ isLoadingVoucher ? "processing..." : "Remove Voucher" }}</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                      
                         <div class="bg-white mb-4 p-4" style="box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1)">
-                            <h5 class="fw-700 text-uppercase mb-4">Order Summary</h5>
+                            <h5 class="fw-700 text-uppercase mb-4">Ringkasan Belanja</h5>
                             <div class="d-flex align-items-center justify-content-between mb-1">
                                 <span>Sub Total :</span>
                                 <p class="mb-0">{{ convertToRupiah(cart?.calculation.sub_total) }}</p>
@@ -208,42 +139,10 @@
                                     {{ convertToRupiah(cart?.calculation.sub_total + (shippingServices[shippingServiceId]?.cost[0]?.value ?? 0)) }}
                                 </h6>
                             </div>
-                            <button class="btn btn-md btn-primary btn-block text-uppercase" @click="handleConfirm" :disabled="isLoadingCheckout">{{ isLoadingCheckout ? "processing..." : "place order" }}</button>
-                            <nuxt-link to="/cart" class="btn btn-md btn-outline-primary btn-block text-uppercase" v-if="!isLoadingCheckout">modify cart</nuxt-link>
+                            <button class="btn btn-md btn-primary btn-block text-uppercase" @click="handleConfirm" :disabled="isLoadingCheckout">{{ isLoadingCheckout ? "processing..." : "lakukan Pembayaran" }}</button>
+                            <nuxt-link to="/cart" class="btn btn-md btn-outline-primary btn-block text-uppercase" v-if="!isLoadingCheckout">Ubah Keranjang Belanja</nuxt-link>
                         </div>
-                        <div>
-                            <div class="bg-primary rounded-top p-3">
-                                <h6 class="lead fw-700 text-white mb-0">Shopping Cart</h6>
-                            </div>
-                            <div class="bg-white rounded-bottom p-3">
-                                <div class="border rounded-lg bg-grey p-3 mb-2" v-for="(item, index) in cart.list" :key="'itemCheckout' + index">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="d-flex">
-                                            <div class="img-ratio1x1 w-78 border rounded-lg mr-3">
-                                                <img :src="assetUrl + item.product_image" />
-                                            </div>
-                                            <div>
-                                                <p class="fs-14 mb-1">{{ item.product_name }}</p>
-                                                <p class="fs-14 fw-700 mb-1" v-if="item.normal_price && item.normal_price != null">
-                                                    <span class="text-old-price fs-14 fw-400 mr-1">{{ convertToRupiah(item.normal_price) }}</span>
-                                                    {{ convertToRupiah(item.purchase_price) }}
-                                                </p>
-                                                <p class="fs-14 fw-700 mb-1" v-else>{{ convertToRupiah(item.purchase_price) }}</p>
-                                                <p class="fs-14 mb-1">
-                                                    <i>{{ item.variant_description }}</i>
-                                                </p>
-                                                <p class="fs-14 mb-0">{{ item.qty }} item</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-3 mt-md-0" v-if="item.note">
-                                        <div class="col-12">
-                                            <p class="fs-14 mb-1">Notes : {{ item.note }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
                 <b-modal id="modalCartEmpty" title="Cart Empty" size="md" centered no-close-on-esc no-close-on-backdrop hide-header-close>
@@ -254,14 +153,14 @@
                         <button class="btn btn-md btn-primary" @click="handleRedirect()">Start Shopping</button>
                     </template>
                 </b-modal>
-                <b-modal id="modalConfirm" title="Confirmation" size="md" centered>
+                <b-modal id="modalConfirm" title="Konfirmasi" size="md" centered>
                     <template #default>
-                        <p class="mb-0">Ready to place your order?</p>
+                        <p class="mb-0">Apakah anda yakin melakukan Peesanan?</p>
                     </template>
                     <template #modal-footer>
                         <div class="d-flex align-items-center">
-                            <nuxt-link to="/cart" class="btn btn-md btn-outline-primary mr-3">Modify Cart</nuxt-link>
-                            <button class="btn btn-md btn-primary" @click="createCheckout()" :disabled="isLoadingCheckout">{{ isLoadingCheckout ? "Processing..." : "Place Order" }}</button>
+                            <nuxt-link to="/cart" class="btn btn-md btn-outline-primary mr-3">Modifikasi keranjang belanja</nuxt-link>
+                            <button class="btn btn-md btn-primary" @click="createCheckout()" :disabled="isLoadingCheckout">{{ isLoadingCheckout ? "Processing..." : "Bayar Sekarang" }}</button>
                         </div>
                     </template>
                 </b-modal>
@@ -281,11 +180,36 @@ export default {
         };
     },
     computed: {
-        ...mapState(["assetUrl", "cart", "listAddress", "selectedAddress", "selectedAddressId", "selectedBilling", "selectedBillingId"]),
+        ...mapState(["assetUrl",
+        "cart",
+        "listAddress",
+        "selectedAddress",
+        "selectedAddressId",
+        "selectedBilling",
+        "selectedBillingId",
+        "rekeningBank",
+        "rekeningNo",
+        "rekeningAccount",
+    ]),
+        paymentMethods() {
+            return [
+                {
+                    value: this.rekeningBank || 'bank',
+                    label: this.rekeningBank || 'Bank Transfer',
+                    account: this.rekeningNo || '-',
+                    accountName: this.rekeningAccount || '-'
+                }
+            ];
+        },
     },
     data() {
         return {
             quantity: 1,
+            customerData: {
+                name: '',
+                email: '',
+                phone: '',
+            },
             shippingServices: [],
             voucherServices: {
                 code:'',
@@ -302,12 +226,14 @@ export default {
                 price: 0,
                 etd: "",
             },
+            paymentMethod:"",
             same_as_shipping: 1,
             isLoadingCheckout: false,
             isLoadingShipping: true,
             isLoadingVoucher: false,
             isVoucherServices: false,
             totalPayment:0,
+            selectedPaymentMethod: '',
         };
     },
     watch: {
@@ -330,7 +256,7 @@ export default {
                 this.$bvModal.show("modalCartEmpty");
             }
 
-            this.$store.dispatch("showProfile");
+          //  this.$store.dispatch("showProfile");
             this.$axios
                 .post("/api/v1/publics/cart/create", cartList)
                 .then((res) => {
@@ -355,8 +281,9 @@ export default {
             const restProduct = this.cart.data.filter((item) => !availableProduct.find(({ variant_id }) => item.variant_id === variant_id));
             const restCart = { data: [...restProduct] };
 
-            if (!this.selectedAddressId) {
-                return this.$bvToast.toast("Alamat pengiriman harus diisi", {
+            // Validasi data pelanggan
+            if (!this.customerData.name) {
+                return this.$bvToast.toast("Nama pelanggan wajib diisi", {
                     title: `Error`,
                     variant: "danger",
                     solid: true,
@@ -364,8 +291,8 @@ export default {
                 });
             }
 
-            if (!this.selectedBillingId && !this.same_as_shipping) {
-                return this.$bvToast.toast("Alamat billing harus diisi", {
+            if (!this.customerData.email) {
+                return this.$bvToast.toast("Email wajib diisi", {
                     title: `Error`,
                     variant: "danger",
                     solid: true,
@@ -373,14 +300,61 @@ export default {
                 });
             }
 
-            if (!this.shippingCourier) {
-                return this.$bvToast.toast("Kurir pengiriman harus diisi", {
+            // Validasi format email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(this.customerData.email)) {
+                return this.$bvToast.toast("Format email tidak valid", {
                     title: `Error`,
                     variant: "danger",
                     solid: true,
                     appendToast: true,
                 });
             }
+
+            if (!this.customerData.phone) {
+                return this.$bvToast.toast("No. Telepon wajib diisi", {
+                    title: `Error`,
+                    variant: "danger",
+                    solid: true,
+                    appendToast: true,
+                });
+            }
+
+            if (!this.selectedPaymentMethod) {
+                return this.$bvToast.toast("Metode Pembayaran wajib diisi", {
+                    title: `Error`,
+                    variant: "danger",
+                    solid: true,
+                    appendToast: true,
+                });
+            }
+
+            // if (!this.selectedAddressId) {
+            //     return this.$bvToast.toast("Alamat pengiriman harus diisi", {
+            //         title: `Error`,
+            //         variant: "danger",
+            //         solid: true,
+            //         appendToast: true,
+            //     });
+            // }
+
+            // if (!this.selectedBillingId && !this.same_as_shipping) {
+            //     return this.$bvToast.toast("Alamat billing harus diisi", {
+            //         title: `Error`,
+            //         variant: "danger",
+            //         solid: true,
+            //         appendToast: true,
+            //     });
+            // }
+
+            // if (!this.shippingCourier) {
+            //     return this.$bvToast.toast("Kurir pengiriman harus diisi", {
+            //         title: `Error`,
+            //         variant: "danger",
+            //         solid: true,
+            //         appendToast: true,
+            //     });
+            // }
 
             if (availableProduct.length <= 0) {
                 return this.$bvToast.toast("Tidak ada produk di dalam keranjang", {
@@ -400,6 +374,10 @@ export default {
                         address_id: this.same_as_shipping ? null : this.selectedBillingId,
                         same_as_shipping: this.same_as_shipping ? 1 : 0,
                     },
+                    customerEmail:this.customerData.email,
+                    customerPhone:this.customerData.phone,
+                   customerName:this.customerData.name,
+                   paymentMethod : this.selectedPaymentMethod,
                     courier: this.selectedCourier,
                     product: availableProduct,
                     voucher: this.voucherServices.id,
@@ -409,7 +387,7 @@ export default {
             this.isLoadingCheckout = true;
 
             this.$axios
-                .post("/api/v1/private/checkout/create", payload)
+                .post("/api/v1/publics/checkout/create", payload)
                 .then((res) => {
                     localStorage.setItem("cart", JSON.stringify(restCart));
                     this.$store.commit("setCart", { data: [...restProduct] });
@@ -505,32 +483,7 @@ export default {
         handleConfirm() {
             const availableProduct = this.cart.list.map((item) => ({ variant_id: item.variant_id, qty: item.qty, note: item.note }));
 
-            if (!this.selectedAddressId) {
-                return this.$bvToast.toast("Alamat pengiriman harus diisi", {
-                    title: `Error`,
-                    variant: "danger",
-                    solid: true,
-                    appendToast: true,
-                });
-            }
-
-            if (!this.selectedBillingId && !this.same_as_shipping) {
-                return this.$bvToast.toast("Alamat billing harus diisi", {
-                    title: `Error`,
-                    variant: "danger",
-                    solid: true,
-                    appendToast: true,
-                });
-            }
-
-            if (!this.shippingCourier) {
-                return this.$bvToast.toast("Kurir pengiriman harus diisi", {
-                    title: `Error`,
-                    variant: "danger",
-                    solid: true,
-                    appendToast: true,
-                });
-            }
+          
 
             if (availableProduct.length <= 0) {
                 return this.$bvToast.toast("Tidak ada produk di dalam keranjang", {
@@ -618,6 +571,6 @@ export default {
                 });
         },
     },
-    middleware: "auth",
+  //  middleware: "auth",
 };
 </script>

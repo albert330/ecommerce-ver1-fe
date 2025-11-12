@@ -1,5 +1,13 @@
 export const state = () => ({
     assetUrl: process.env.ASSET_URL,
+    logoHeader: process.env.LOGO_HEADER,
+    brandName: process.env.BRAND_NAME,
+    brandAddress: process.env.BRAND_ADDRESS,
+    brandCorporateName: process.env.BRAND_CORPORATENAME,
+    rekeningBank: process.env.REKENING_BANK,
+    rekeningNo: process.env.REKENING_NO,
+    rekeningAccount: process.env.REKENING_ACCOUNT,
+    sliderOne: process.env.SLIDER_HOME_1,
     isLogin: false,
     token: null,
     otp: null,

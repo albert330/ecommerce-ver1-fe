@@ -4,16 +4,17 @@
 
 .footer-section {
     padding: 0;
-    background-color: #f4f4f4;
-    color: #000;
+    background-color: $footer-navbar;
+    color: $footer-font-color;
     overflow: hidden;
 
     .container {
-        padding-top: 4rem;
-        padding-bottom: 2.5rem;
+        padding-top: 2rem;
+        padding-bottom: 1rem;
     }
 
     .copyright {
+        background-color: $footer-copyright;
         .container {
             padding-top: 0;
             padding-bottom: 0;
@@ -29,6 +30,6 @@
 
 .dark-mode {
     .footer-section {
-        background-color: $bg-dark-secondary;
+        background-color: $footer-font-color;
     }
 }

@@ -1,10 +1,8 @@
 <template>
     <div class="main-container">
-        <Header />
+        <HeaderModel1 />
         <OffCanvasMobileMenu />
-        <a class="btn btn-whatsapp-float p-0" href="https://wa.me/628818182121" target="_blank">
-            <img src="/images/whatsapp.png" alt="whatsapp" />
-        </a>
+      
 
         <Nuxt />
 
@@ -13,6 +11,8 @@
 </template>
 
 <script>
+import HeaderModel1 from '../components/HeaderModel1.vue';
+
 export default {
     watch: {
         "$route.path": {

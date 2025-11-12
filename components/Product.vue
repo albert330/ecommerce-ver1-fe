@@ -18,7 +18,7 @@
             <div class="ribbon-label ribbon-sold-out" v-if="isSoldOut">Sold Out</div>
         </div>
         <div class="info px-3">
-            <p class="title" style="min-height:34px;">
+            <p class="title" style="min-height:10px;">
                 <n-link :to="'/product/' + slug">{{ name }}</n-link>
             </p>
             <p class="price" v-if="purchasePrice != 0">
@@ -32,7 +32,7 @@
                 <span class="old-price" v-if="percentage">{{ convertToRupiah(discountPrice) }}</span>
             </div>
             <n-link :to="'/product/' + slug" class="image w-100">
-                <button class="btn btn-sm btn-primary btn-block text-uppercase">View Product</button>
+                <button class="btn btn-sm btn-primary btn-block text-uppercase">Lihat</button>
             </n-link>
         </div>
     </div>

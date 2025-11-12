@@ -4,7 +4,7 @@
         <div class="popup-cart-inner">
             <div class="cart-header">
                 <div class="title">
-                    <h4 class="mb-1">SHOPPING CART</h4>
+                    <p class="mb-1 fw-5"><b>KERANJANG BELANJA</b></p>
                     <p class="fs-14 fw-700 mb-0">Total item ({{ cart?.calculation?.total_cart }} item)</p>
                 </div>
                 <button class="popup-close-btn" @click="$parent.popupCartToggle()"></button>
@@ -37,7 +37,7 @@
                                             </div>
                                             <div class="d-flex flex-column">
                                                 <div class="mb-3">
-                                                    <p class="text-primary fs-14 mb-1">Notes</p>
+                                                    <p class="text-primary fs-14 mb-1">No Pelanggan</p>
                                                     <textarea class="form-control" cols="25" rows="2" v-model="item.note" @blur="onChangeNote($event, item.variant_id)"></textarea>
                                                 </div>
                                                 <div class="d-flex align-items-center ml-auto">
@@ -72,8 +72,8 @@
                                     </div>
                                 </div>
                                 <div v-if="outOfStockSorted.length > 0">
-                                    <h4 class="mb-1">Product not available</h4>
-                                    <p class="mb-4">The product in your shopping cart is out of stock.</p>
+                                    <h4 class="mb-1">Produk Tidak Tersedia</h4>
+                                    <p class="mb-4">Produk di keranjang belanja Anda tidak tersedia.</p>
                                     <div class="out-of-stock border rounded-lg p-3 mb-3" v-for="(item, index) in outOfStockSorted" :key="'mobileOutOfStockItem' + index">
                                         <div class="d-flex flex-column">
                                             <div class="d-flex mb-3">
@@ -134,9 +134,9 @@
                         </div>
                     </template>
                     <div class="d-flex flex-column align-items-center justify-content-center text-center" style="height: 300px" v-else>
-                        <h3>Your Cart is empty</h3>
-                       
-                        <nuxt-link to="/product"><button class="btn btn-md btn-primary" @click="$parent.popupCartToggle()">Start Shopping</button></nuxt-link>
+                        <h3>Keranjang Belanja Kosong</h3>
+
+                        <nuxt-link to="/product"><button class="btn btn-md btn-primary" @click="$parent.popupCartToggle()">Mulai Belanja</button></nuxt-link>
                     </div>
                 </template>
                 <template v-else>
@@ -189,7 +189,7 @@
                     <p class="fs-14 fw-700 mb-0">Total :</p>
                     <h5 class="mb-0">{{ convertToRupiah(cart.calculation?.sub_total ?? 0) }}</h5>
                 </div>
-                <button class="btn btn-md btn-primary btn-block text-uppercase" @click="checkoutAndRefreshCart(); $parent.popupCartToggle();">checkout</button>
+                <button class="btn btn-md btn-primary btn-block text-uppercase" @click="checkoutAndRefreshCart(); $parent.popupCartToggle();">Checkout</button>
             </div>
         </div>
     </div>

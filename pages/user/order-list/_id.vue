@@ -82,7 +82,7 @@
                                     <p class="fw-700 mb-0">{{ item.product_name }}</p>
                                     <p class="fs-14 text-secondary-light mb-2" v-if="item.variant_description">{{ item.variant_description }}</p>
                                     <p class="fs-14 text-secondary-light mb-0" v-if="item.note">
-                                        <span class="text-dark">Notes:</span>
+                                        <span class="text-dark">No Pelanggan:</span>
                                         <br />
                                         {{ item.note }}
                                     </p>

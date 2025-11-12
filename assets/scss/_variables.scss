@@ -12,16 +12,29 @@ $body-font: $roboto;
 $fontAwesome5Brands: "Font Awesome 5 Brands";
 $fontAwesome5Pro: "Font Awesome 5 Pro";
 
+//=============model template
+$header-navbar:#ef6f31;
+$header-font-color:#FFFFFF;
+$header-font-color-submenu:#ef6f31;
+
+$footer-navbar:#ef6f31;
+$footer-font-color:#FFFFFF;
+$footer-font-color-submenu:#ef6f31;
+$footer-copyright:#F44336;
+
+$primary-color:#ef6f31;
+$primary-font-color:#fff;
+$primary: #ef6f31;
 
 // Colors
 $white: #FFFFFF;
 $black: #000000;
 $grey: #F8F9FD;
-$grey-javabica: #e2e2e2;
+$grey-ecommerce: #e2e2e2;
 $paragraph-light: #dddddd;
 
 // Template Colors
-$primary: #091F40;
+
 $primary-two: #3a7e69;
 $primary-three: #ef6f31;
 

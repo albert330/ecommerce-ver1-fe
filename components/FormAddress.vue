@@ -3,66 +3,39 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="mb-3">
-                    <label>First Name</label>
-                    <input class="form-control" type="text" name="first_name" placeholder="First Name" v-model="payload.first_name" />
+                    <label>Nama Depan</label>
+                    <input class="form-control" type="text" name="first_name" placeholder="Nama Belakang" v-model="payload.first_name" />
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="mb-3">
-                    <label>Last Name</label>
-                    <input class="form-control" type="text" name="last_name" placeholder="Last Name" v-model="payload.last_name" />
+                    <label>Nama Akhir</label>
+                    <input class="form-control" type="text" name="last_name" placeholder="Nama Akhir" v-model="payload.last_name" />
                 </div>
             </div>
             <div class="col-12">
                 <div class="mb-3">
-                    <label>Phone Number</label>
-                    <input class="form-control" type="text" name="phone_number" placeholder="Phone Number" v-model="payload.phone_number" />
+                    <label>No Telepon</label>
+                    <input class="form-control" type="text" name="phone_number" placeholder="No Telephone" v-model="payload.phone_number" />
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label>Province</label>
-                    <select class="form-control" v-model="payload.province" @change="getCity()">
-                        <option value="" disabled hidden>Choose Province</option>
-                        <option :value="item.province_id" v-for="(item, index) in provinces" :key="index">
-                            {{ item.province }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label>City</label>
-                    <select class="form-control" v-model="payload.city" :disabled="payload.province == ''">
-                        <option value="" disabled hidden>Choose City</option>
-                        <option :value="item.city_id" v-for="(item, index) in cities" :key="index">
-                            {{ item.city_name }}
-                        </option>
-                    </select>
-                </div>
-            </div>
+
             <div class="col-12">
                 <div class="mb-3">
-                    <label>Post Code</label>
+                    <label>Kode Pos</label>
                     <input class="form-control" type="text" name="postal_code" placeholder="Post Code" v-model="payload.postal_code" />
                 </div>
             </div>
             <div class="col-12">
                 <div class="mb-3">
-                    <label>address label (Apartment, House, etc)</label>
+                    <label>Label Alamat (Apartment, House, etc)</label>
                     <input class="form-control" type="text" name="label_place" placeholder="(Home, Apartment)" v-model="payload.label_place" />
                 </div>
             </div>
             <div class="col-12">
                 <div class="mb-3">
-                    <label>Address</label>
+                    <label>Alamat</label>
                     <textarea class="form-control" type="text" name="address" placeholder="Address" rows="5" v-model="payload.address" />
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="mb-3">
-                    <label>Notes for courier</label>
-                    <input class="form-control" type="text" name="courier_note" placeholder="Notes for courier" v-model="payload.courier_note" />
                 </div>
             </div>
         </div>
@@ -130,7 +103,7 @@ export default {
                 postal_code: "",
             };
 
-            this.$store.dispatch("showProfile");
+          //  this.$store.dispatch("showProfile");
         },
         onSubmitAddress() {
             this.payload.fk_user_id = this.profile?.id;
@@ -205,30 +178,30 @@ export default {
                 });
             }
         },
-        getProvince() {
-            this.$axios
-                .get("/api/v1/publics/shipping/province", { params: { id: "" } })
-                .then((res) => {
-                    this.provinces = res.data.data;
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        },
-        getCity() {
-            this.$axios
-                .get("/api/v1/publics/shipping/city", { params: { id: "", province_id: this.payload.province } })
-                .then((res) => {
-                    this.cities = res.data.data;
-                    if(this.payload.province !== this.detailAddress.province.id){
-                        this.newProvince = this.payload.province;
-                        this.payload.city = "";
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        },
+        // getProvince() {
+        //     this.$axios
+        //         .get("/api/v1/publics/shipping/province", { params: { id: "" } })
+        //         .then((res) => {
+        //             this.provinces = res.data.data;
+        //         })
+        //         .catch((err) => {
+        //             console.log(err);
+        //         });
+        // },
+        // getCity() {
+        //     this.$axios
+        //         .get("/api/v1/publics/shipping/city", { params: { id: "", province_id: this.payload.province } })
+        //         .then((res) => {
+        //             this.cities = res.data.data;
+        //             if(this.payload.province !== this.detailAddress.province.id){
+        //                 this.newProvince = this.payload.province;
+        //                 this.payload.city = "";
+        //             }
+        //         })
+        //         .catch((err) => {
+        //             console.log(err);
+        //         });
+        // },
     },
 };
 </script>
