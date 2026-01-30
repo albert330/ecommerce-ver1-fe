@@ -55,7 +55,7 @@
                                         <div class="d-flex align-items-center">
                                             <div>
                                                 <p class="fs-14 mb-1">No Pelanggan</p>
-                                                <textarea class="form-control" cols="25" rows="2" v-model="item.note" @blur="onChangeNote($event, item.variant_id)"></textarea>
+                                                <textarea class="form-control" cols="25" rows="2" :value="item.note" disabled style="background-color: #e9ecef; cursor: not-allowed;"></textarea>
                                             </div>
                                             <div class="text-right ml-md-auto" v-if="item.more_information != null">
                                                 <span class="fs-14 fw-700 badge badge-success mb-2">{{ item.more_information.more_cheaper_info }}</span>
@@ -84,7 +84,7 @@
                                             <div class="d-flex flex-column ml-md-auto">
                                                 <div class="mb-3">
                                                     <p class="text-primary fs-14 mb-1">No Pelanggan</p>
-                                                    <textarea class="form-control" cols="25" rows="2" v-model="item.note" @blur="onChangeNote($event, item.variant_id)"></textarea>
+                                                    <textarea class="form-control" cols="25" rows="2" :value="item.note" disabled style="background-color: #e9ecef; cursor: not-allowed;"></textarea>
                                                 </div>
                                                 <div class="d-flex align-items-center ml-auto">
                                                     <div class="mr-4">
@@ -167,7 +167,7 @@
                                         <div class="d-flex align-items-center">
                                             <div>
                                                 <p class="fs-14 mb-1">No Pelanggan</p>
-                                                <textarea class="form-control" cols="25" rows="2" v-model="item.note" @blur="onChangeNote($event, item.variant_id)"></textarea>
+                                                <textarea class="form-control" cols="25" rows="2" :value="item.note" disabled style="background-color: #e9ecef; cursor: not-allowed;"></textarea>
                                             </div>
                                             <div class="text-left ml-md-auto w-50">
                                                 <p class="fs-14" v-if="item.stock > 0">Maksimal pembelian {{ item.stock }} item. Kurangi jumlah pembelian agar dapat diproses.</p>
@@ -196,7 +196,7 @@
                                             <div class="d-flex flex-column ml-md-auto">
                                                 <div class="mb-3">
                                                     <p class="text-primary fs-14 mb-1">No Pelanggan</p>
-                                                    <textarea class="form-control" cols="25" rows="2" v-model="item.note" @blur="onChangeNote($event, item.variant_id)"></textarea>
+                                                    <textarea class="form-control" cols="25" rows="2" :value="item.note" disabled style="background-color: #e9ecef; cursor: not-allowed;"></textarea>
                                                 </div>
                                                 <div class="d-flex align-items-center ml-auto">
                                                     <div class="mr-4">

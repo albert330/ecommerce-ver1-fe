@@ -113,7 +113,7 @@
                                 </div>
                                 <template v-if="variant.list[variantParentId]?.child[variantChildId].stock > 0 || variant.list[variantParentId]?.child[variantChildId].is_ignore_stock === 'ACTIVE'">
                                    <p class="text-primary fs-14 mb-1">masukan no Pelanggan</p>
-                                  <input class="form-control" cols="25" rows="2" v-model="note" placeholder="0812xxxxxx" > 
+                                  <input class="form-control" cols="25" rows="2" v-model="note" placeholder="0812xxxxxx" type="tel" >
                                       <!-- <textarea class="form-control" cols="25" rows="2" v-model="item.note" @blur="onChangeNote($event, item.variant_id)"></textarea> -->
                                     <button class="btn btn-md btn-primary btn-block text-uppercase mt-2" @click="addToCart" v-if="!isLoadingCart">Tambahkan Ke Keranjang</button>
                                     <button class="btn btn-md btn-primary btn-block text-uppercase" disabled v-else>Harap Tunggu...</button>
@@ -412,8 +412,9 @@ export default {
             return;
             }
 
-            if(this.note.length <= 5) {
-                this.$bvToast.toast("no pelanggan harus lebih dari 5 karakter", {
+            const phoneRegex = /^(\+62|62|0)[2-9][0-9]{7,12}$/;
+            if(!phoneRegex.test(this.note)) {
+                this.$bvToast.toast("Format nomor telepon tidak valid. Contoh: 08123456789", {
                 title: `Warning`,
                 variant: "Warning",
                 solid: true,

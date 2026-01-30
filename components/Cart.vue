@@ -38,7 +38,7 @@
                                             <div class="d-flex flex-column">
                                                 <div class="mb-3">
                                                     <p class="text-primary fs-14 mb-1">No Pelanggan</p>
-                                                    <textarea class="form-control" cols="25" rows="2" v-model="item.note" @blur="onChangeNote($event, item.variant_id)"></textarea>
+                                                    <textarea class="form-control" cols="25" rows="2" :value="item.note" disabled style="background-color: #e9ecef; cursor: not-allowed;"></textarea>
                                                 </div>
                                                 <div class="d-flex align-items-center ml-auto">
                                                     <div class="mr-4">
